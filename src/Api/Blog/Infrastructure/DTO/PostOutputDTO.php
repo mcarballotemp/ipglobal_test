@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Back\Blog\Infrastructure\DTO;
+namespace App\Api\Blog\Infrastructure\DTO;
 
 readonly class PostOutputDTO
 {

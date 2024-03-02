@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Back\Blog\Infrastructure\Controller;
+namespace App\Api\Blog\Infrastructure\Controller;
 
-use App\Back\Blog\Infrastructure\DTO\PostOutputDTO;
+use App\Api\Blog\Infrastructure\DTO\PostOutputDTO;
 use App\Shared\Controller\ControllerInterface;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use Symfony\Component\HttpFoundation\JsonResponse;

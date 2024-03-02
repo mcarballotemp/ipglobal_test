@@ -1,7 +1,7 @@
 controllersapi:
     resource:
-        path: ../src/Back
-        namespace: App\Back
+        path: ../src/Api
+        namespace: App\Api
     type: attribute
     prefix: '/api'
 
