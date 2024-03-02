@@ -1,5 +1,13 @@
-controllers:
+controllersapi:
     resource:
-        path: ../src/Front/Controller/
-        namespace: App\Front\Controller
+        path: ../src/Back
+        namespace: App\Back
     type: attribute
+    prefix: '/api'
+
+controllersfront:
+    resource:
+        path: ../src/Front
+        namespace: App\Front
+    type: attribute
+
