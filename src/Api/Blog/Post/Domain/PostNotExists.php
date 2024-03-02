@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Api\Blog\Domain\Post;
+namespace App\Api\Blog\Post\Domain;
 
 class PostNotExists extends \RuntimeException
 {

@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Api\Blog\Infrastructure\Repository;
+namespace App\Api\Blog\Post\Infrastructure\Repository;
 
-use App\Api\Blog\Domain\Post\Post;
-use App\Api\Blog\Domain\Post\PostCollection;
-use App\Api\Blog\Domain\Post\PostRepository;
-use App\Api\Blog\Domain\Post\ValueObject\PostAuthorId;
-use App\Api\Blog\Domain\Post\ValueObject\PostBody;
-use App\Api\Blog\Domain\Post\ValueObject\PostId;
-use App\Api\Blog\Domain\Post\ValueObject\PostTitle;
+use App\Api\Blog\Post\Domain\Post;
+use App\Api\Blog\Post\Domain\PostCollection;
+use App\Api\Blog\Post\Domain\PostRepository;
+use App\Api\Blog\Post\Domain\ValueObject\PostAuthorId;
+use App\Api\Blog\Post\Domain\ValueObject\PostBody;
+use App\Api\Blog\Post\Domain\ValueObject\PostId;
+use App\Api\Blog\Post\Domain\ValueObject\PostTitle;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 class JsonPlaceHolderPostRepository implements PostRepository

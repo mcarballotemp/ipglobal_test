@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Api\Blog\Domain\Post\ValueObject;
+namespace App\Api\Blog\Post\Domain\ValueObject;
 
 class PostBody
 {

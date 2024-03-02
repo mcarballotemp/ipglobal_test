@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Api\Blog\Application;
+namespace App\Api\Blog\Post\Application;
 
-use App\Api\Blog\Domain\Post\PostCollection;
-use App\Api\Blog\Domain\Post\PostRepository;
+use App\Api\Blog\Post\Domain\PostCollection;
+use App\Api\Blog\Post\Domain\PostRepository;
 
 class GetAllPost
 {
