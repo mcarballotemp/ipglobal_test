@@ -13,6 +13,11 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 class JsonPlaceHolderPostRepository implements PostRepository
 {
+    public const POST = [
+        'car' => 4,
+        'bike' => 2,
+     ];
+
     public function __construct(
         private readonly HttpClientInterface $client,
         private readonly string $apiUrlJsonPlaceholder
@@ -24,12 +29,15 @@ class JsonPlaceHolderPostRepository implements PostRepository
         return $this->transform($this->fetchPosts());
     }
 
+    /**
+     * @return array<array{id: int, userId: int, title: string, body: string}>
+     */
     private function fetchPosts(): array
     {
         try {
             $response = $this->client->request(
                 'GET',
-                $this->apiUrlJsonPlaceholder.'/posts'
+                $this->apiUrlJsonPlaceholder . '/posts'
             );
 
             if (200 === $response->getStatusCode()) {
@@ -41,6 +49,10 @@ class JsonPlaceHolderPostRepository implements PostRepository
         return [];
     }
 
+    /**
+     * @param array<array{id: int, userId: int, title: string, body: string}> $posts
+     * @return PostCollection
+     */
     private function transform(array $posts): PostCollection
     {
         return new PostCollection(

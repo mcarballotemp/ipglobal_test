@@ -10,7 +10,7 @@ use App\Api\Blog\Domain\Post\ValueObject\PostTitle;
 class Post
 {
     public function __construct(
-        public readonly ?PostId $id,
+        public readonly PostId $id,
         public readonly PostAuthorId $authorId,
         public readonly PostTitle $title,
         public readonly PostBody $body

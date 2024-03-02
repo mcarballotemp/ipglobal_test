@@ -59,7 +59,7 @@
         "post-update-cmd": [
             "@auto-scripts"
         ],
-        "phpstan": "phpstan analyse -c phpstan.neon",
+        "phpstan": "phpstan analyse",
         "csfix": "php-cs-fixer fix --config=.php-cs-fixer.dist.php"
     },
     "conflict": {

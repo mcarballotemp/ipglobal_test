@@ -4,6 +4,9 @@ namespace App\Api\Blog\Domain\Post;
 
 class PostCollection
 {
+    /**
+     * @var Post[] $posts
+     */
     private array $posts = [];
 
     public function __construct(Post ...$posts)
@@ -18,6 +21,9 @@ class PostCollection
         $this->posts[] = $post;
     }
 
+    /**
+     * @return Post[]
+     */
     public function getAll(): array
     {
         return $this->posts;
