@@ -3,7 +3,6 @@
 namespace App\Api\Blog\Application;
 
 use App\Api\Blog\Domain\Post\PostCollection;
-use App\Api\Blog\Domain\Post\PostNotExists;
 use App\Api\Blog\Domain\Post\PostRepository;
 
 class GetAllPost

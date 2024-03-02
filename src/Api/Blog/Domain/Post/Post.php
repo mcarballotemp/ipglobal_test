@@ -2,31 +2,18 @@
 
 namespace App\Api\Blog\Domain\Post;
 
+use App\Api\Blog\Domain\Post\ValueObject\PostBody;
+use App\Api\Blog\Domain\Post\ValueObject\PostId;
+use App\Api\Blog\Domain\Post\ValueObject\PostAuthorId;
+use App\Api\Blog\Domain\Post\ValueObject\PostTitle;
+
 class Post
 {
-    private string $id;
-    private string $title;
-    private string $content;
-
-    public function __construct(string $id, string $title, string $content)
-    {
-        $this->id = $id;
-        $this->title = $title;
-        $this->content = $content;
-    }
-
-    public function getId(): string
-    {
-        return $this->id;
-    }
-
-    public function getTitle(): string
-    {
-        return $this->title;
-    }
-
-    public function getContent(): string
-    {
-        return $this->content;
+    public function __construct(
+        public readonly ?PostId $id,
+        public readonly PostAuthorId $authorId,
+        public readonly PostTitle $title,
+        public readonly PostBody $body
+    ) {
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Api\Blog\Infrastructure\Controller;
 
 use App\Api\Blog\Application\GetAllPost;
+use App\Api\Blog\Domain\Post\Post;
 use App\Api\Blog\Domain\Post\PostCollection;
 use App\Api\Blog\Infrastructure\DTO\PostOutputDTO;
 use App\Shared\Controller\ControllerInterface;
@@ -33,16 +34,17 @@ class PostGetAllController implements ControllerInterface
         /** @var PostCollection */
         $postCollection = $this->getAllPosts->__invoke();
 
-        $output = [];
-
-        foreach ($postCollection->getAll() as $post) {
-            $output[] = new PostOutputDTO(
-                intval($post->getId()),
-                $post->getTitle(),
-                '',
-                12
-            );
-        }
+        $output = array_map(
+            function (Post $post) {
+                return new PostOutputDTO(
+                    $post->id->value(),
+                    $post->authorId->value(),
+                    $post->title->value(),
+                    $post->body->value(),
+                );
+            },
+            $postCollection->getAll()
+        );
 
         return new JsonResponse($output, 200);
     }
