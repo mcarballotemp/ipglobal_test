@@ -15,7 +15,7 @@ class PostId
     private function validate(int $id): void
     {
         if ($id <= 0) {
-            throw new \InvalidArgumentException("PostId must be greater than 0.");
+            throw new \InvalidArgumentException('PostId must be greater than 0.');
         }
     }
 

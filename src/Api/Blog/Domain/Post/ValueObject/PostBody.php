@@ -15,10 +15,10 @@ class PostBody
     private function validate(string $body): void
     {
         if (empty($body)) {
-            throw new \InvalidArgumentException("PostBody cannot be empty.");
+            throw new \InvalidArgumentException('PostBody cannot be empty.');
         }
         if (strlen($body) > 4096) {
-            throw new \InvalidArgumentException("PostBody cannot exceed 4096 characters.");
+            throw new \InvalidArgumentException('PostBody cannot exceed 4096 characters.');
         }
     }
 

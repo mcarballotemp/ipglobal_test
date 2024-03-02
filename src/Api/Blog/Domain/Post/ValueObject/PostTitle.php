@@ -15,10 +15,10 @@ class PostTitle
     private function validate(string $title): void
     {
         if (empty($title)) {
-            throw new \InvalidArgumentException("PostTitle cannot be empty.");
+            throw new \InvalidArgumentException('PostTitle cannot be empty.');
         }
         if (strlen($title) > 2156) {
-            throw new \InvalidArgumentException("PostTitle cannot exceed 256 characters.");
+            throw new \InvalidArgumentException('PostTitle cannot exceed 256 characters.');
         }
     }
 

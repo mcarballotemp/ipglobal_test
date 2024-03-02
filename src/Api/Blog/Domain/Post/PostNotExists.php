@@ -2,9 +2,7 @@
 
 namespace App\Api\Blog\Domain\Post;
 
-use RuntimeException;
-
-class PostNotExists extends RuntimeException
+class PostNotExists extends \RuntimeException
 {
     public function __construct()
     {

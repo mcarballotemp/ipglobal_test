@@ -29,10 +29,10 @@ class JsonPlaceHolderPostRepository implements PostRepository
         try {
             $response = $this->client->request(
                 'GET',
-                $this->apiUrlJsonPlaceholder . '/posts'
+                $this->apiUrlJsonPlaceholder.'/posts'
             );
 
-            if ($response->getStatusCode() === 200) {
+            if (200 === $response->getStatusCode()) {
                 return $response->toArray();
             }
         } catch (\Throwable $th) {

@@ -15,7 +15,7 @@ class PostAuthorId
     private function validate(int $authorId): void
     {
         if ($authorId <= 0) {
-            throw new \InvalidArgumentException("PostAuthorId must be greater than 0.");
+            throw new \InvalidArgumentException('PostAuthorId must be greater than 0.');
         }
     }
 

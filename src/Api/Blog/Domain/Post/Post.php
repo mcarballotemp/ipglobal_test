@@ -2,9 +2,9 @@
 
 namespace App\Api\Blog\Domain\Post;
 
+use App\Api\Blog\Domain\Post\ValueObject\PostAuthorId;
 use App\Api\Blog\Domain\Post\ValueObject\PostBody;
 use App\Api\Blog\Domain\Post\ValueObject\PostId;
-use App\Api\Blog\Domain\Post\ValueObject\PostAuthorId;
 use App\Api\Blog\Domain\Post\ValueObject\PostTitle;
 
 class Post

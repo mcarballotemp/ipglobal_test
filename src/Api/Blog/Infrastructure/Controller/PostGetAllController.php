@@ -8,9 +8,9 @@ use App\Api\Blog\Domain\Post\PostCollection;
 use App\Api\Blog\Infrastructure\DTO\PostOutputDTO;
 use App\Shared\Controller\ControllerInterface;
 use Nelmio\ApiDocBundle\Annotation\Model;
+use OpenApi\Attributes as OA;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
-use OpenApi\Attributes as OA;
 
 class PostGetAllController implements ControllerInterface
 {
@@ -22,7 +22,7 @@ class PostGetAllController implements ControllerInterface
     #[Route('blog/posts', name: 'get_posts', methods: ['GET'])]
     #[OA\Response(
         response: 200,
-        description: "Return All Posts",
+        description: 'Return All Posts',
         content: new OA\JsonContent(
             type: 'array',
             items: new OA\Items(ref: new Model(type: PostOutputDTO::class)),
