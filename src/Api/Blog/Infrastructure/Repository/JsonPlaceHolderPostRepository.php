@@ -37,7 +37,7 @@ class JsonPlaceHolderPostRepository implements PostRepository
         try {
             $response = $this->client->request(
                 'GET',
-                $this->apiUrlJsonPlaceholder . '/posts'
+                $this->apiUrlJsonPlaceholder.'/posts'
             );
 
             if (200 === $response->getStatusCode()) {
@@ -51,7 +51,6 @@ class JsonPlaceHolderPostRepository implements PostRepository
 
     /**
      * @param array<array{id: int, userId: int, title: string, body: string}> $posts
-     * @return PostCollection
      */
     private function transform(array $posts): PostCollection
     {

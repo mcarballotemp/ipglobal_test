@@ -18,6 +18,8 @@ USER www-data
 
 RUN composer install --optimize-autoloader
 
+USER root
+
 RUN chown -R www-data:www-data /var/www/html
 
 EXPOSE 9000

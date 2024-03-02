@@ -5,7 +5,7 @@ namespace App\Api\Blog\Domain\Post;
 class PostCollection
 {
     /**
-     * @var Post[] $posts
+     * @var Post[]
      */
     private array $posts = [];
 
