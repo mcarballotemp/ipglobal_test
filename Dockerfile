@@ -8,18 +8,20 @@ RUN apt-get update && apt-get install -y \
 
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-WORKDIR /var/www/html
+WORKDIR /var/www
 
 COPY . . 
 
-RUN chown -R www-data:www-data /var/www /var/www/html
+RUN cp phpstan.dist.neon phpstan.neon
+
+RUN chown -R www-data:www-data /var/www /var/www
 
 USER www-data
 
-RUN composer install --no-dev --optimize-autoloader
+RUN composer install --optimize-autoloader
 
 USER root
 
-RUN chown -R www-data:www-data /var/www/html
+RUN chown -R www-data:www-data /var/www
 
 EXPOSE 9000
