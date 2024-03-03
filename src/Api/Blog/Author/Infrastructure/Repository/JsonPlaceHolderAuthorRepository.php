@@ -5,9 +5,10 @@ namespace App\Api\Blog\Author\Infrastructure\Repository;
 use App\Api\Blog\Author\Domain\Author;
 use App\Api\Blog\Author\Domain\AuthorNotExists;
 use App\Api\Blog\Author\Domain\AuthorRepository;
+use App\Api\Blog\Shared\Domain\AuthorCheckIfExists;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
-class JsonPlaceHolderAuthorRepository implements AuthorRepository
+class JsonPlaceHolderAuthorRepository implements AuthorRepository, AuthorCheckIfExists
 {
     public function __construct(
         private readonly HttpClientInterface $client,
@@ -18,6 +19,18 @@ class JsonPlaceHolderAuthorRepository implements AuthorRepository
     public function find(int $id): Author
     {
         return Author::fromArray($this->fetchUserById($id));
+    }
+
+    public function exists(int $id): bool
+    {
+        try {
+            $this->find($id);
+
+            return true;
+        } catch (\Throwable $th) {
+        }
+
+        return false;
     }
 
     /**

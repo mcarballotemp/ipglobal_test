@@ -2,24 +2,21 @@
 
 namespace App\Api\Blog\Post\Infrastructure\Controller;
 
-use App\Api\Blog\Post\Application\GetAllPost;
+use App\Api\Blog\Post\Application\CreatePost;
+use App\Api\Blog\Post\Domain\Post;
 use App\Api\Blog\Post\Infrastructure\DTO\PostCreateInputDTO;
+use App\Api\Blog\Post\Infrastructure\DTO\PostCreateOutputDTO;
+use App\Shared\Controller\BaseController;
 use App\Shared\Controller\ControllerInterface;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use OpenApi\Attributes as OA;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Serializer\SerializerInterface;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
 
-class PostCreateController implements ControllerInterface
+class PostCreateController extends BaseController implements ControllerInterface
 {
-    public function __construct(
-        private readonly GetAllPost $getAllPosts
-    ) {
-    }
-
     #[Route('blog/posts', name: 'post_posts', methods: ['POST'])]
     #[OA\RequestBody(
         request: 'CreateBlogPost',
@@ -40,18 +37,28 @@ class PostCreateController implements ControllerInterface
     #[OA\Tag(name: 'Blog - Post')]
     public function createPost(
         Request $request,
-        SerializerInterface $serializer,
-        ValidatorInterface $validator
+        CreatePost $createPost
     ): JsonResponse {
-        $input = $serializer->deserialize($request->getContent(), PostCreateInputDTO::class, 'json');
-        print_r($input);
-        $errors = (string) $validator->validate($input);
-        print_r($errors);
-        exit('hola');
-        $loquesea = new PostCreateInputDTO(intval($data['id']), $data['title']);
-        print_r($loquesea);
-        exit('vale');
+        [$input, $errors] = $this->deserializeAndValidate($request, PostCreateInputDTO::class);
 
-        return new JsonResponse([], 200);
+        if ($errors) {
+            return $this->respondWithValidationErrors($errors);
+        }
+
+        if ($input) {
+            /** @var Post */
+            $post = $createPost->__invoke(
+                $input->authorId,
+                $input->title,
+                $input->body
+            );
+
+            return new JsonResponse(
+                new PostCreateOutputDTO($post->id->value()),
+                Response::HTTP_CREATED
+            );
+        }
+
+        return new JsonResponse('', Response::HTTP_BAD_REQUEST);
     }
 }

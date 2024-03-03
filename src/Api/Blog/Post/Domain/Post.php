@@ -17,6 +17,19 @@ class Post
     ) {
     }
 
+    public static function create(
+        int $authorId,
+        string $title,
+        string $body
+    ): self {
+        return new self(
+            PostId::create(),
+            new AuthorId($authorId),
+            new PostTitle($title),
+            new PostBody($body)
+        );
+    }
+
     /**
      * @param array{id: int, authorId: int, title: string, body: string} $post
      */
@@ -27,6 +40,20 @@ class Post
             new AuthorId($post['authorId']),
             new PostTitle($post['title']),
             new PostBody($post['body'])
+        );
+    }
+
+    public static function fromPrimitives(
+        int $id,
+        int $authorId,
+        string $title,
+        string $body
+    ): self {
+        return new self(
+            new PostId($id),
+            new AuthorId($authorId),
+            new PostTitle($title),
+            new PostBody($body)
         );
     }
 }

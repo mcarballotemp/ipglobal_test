@@ -10,6 +10,7 @@ use App\Shared\Controller\ControllerInterface;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use OpenApi\Attributes as OA;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class PostGetAllController implements ControllerInterface
@@ -44,6 +45,6 @@ class PostGetAllController implements ControllerInterface
             $postCollection->getAll()
         );
 
-        return new JsonResponse($output, 200);
+        return new JsonResponse($output, Response::HTTP_OK);
     }
 }

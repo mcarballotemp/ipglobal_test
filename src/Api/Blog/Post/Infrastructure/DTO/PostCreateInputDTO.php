@@ -8,10 +8,16 @@ readonly class PostCreateInputDTO
 {
     public function __construct(
         #[Assert\NotBlank]
-        public string $id,
+        #[Assert\GreaterThan(value: 0)]
+        public int $authorId,
 
         #[Assert\NotBlank]
+        #[Assert\Length(max: 256)]
         public string $title,
+
+        #[Assert\NotBlank]
+        #[Assert\Length(max: 4096)]
+        public string $body,
     ) {
     }
 }

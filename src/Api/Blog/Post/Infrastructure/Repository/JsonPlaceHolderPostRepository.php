@@ -4,6 +4,7 @@ namespace App\Api\Blog\Post\Infrastructure\Repository;
 
 use App\Api\Blog\Post\Domain\Post;
 use App\Api\Blog\Post\Domain\PostCollection;
+use App\Api\Blog\Post\Domain\PostNotCreated;
 use App\Api\Blog\Post\Domain\PostRepository;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
@@ -18,6 +19,18 @@ class JsonPlaceHolderPostRepository implements PostRepository
     public function findAll(): PostCollection
     {
         return $this->transform($this->fetchPosts());
+    }
+
+    public function create(Post $post): Post
+    {
+        $savedId = $this->savePost($post);
+
+        return Post::fromPrimitives(
+            $savedId,
+            $post->authorId->value(),
+            $post->title->value(),
+            $post->body->value()
+        );
     }
 
     /**
@@ -38,6 +51,35 @@ class JsonPlaceHolderPostRepository implements PostRepository
         }
 
         return [];
+    }
+
+    private function savePost(Post $post): int
+    {
+        try {
+            $response = $this->client->request(
+                'POST',
+                $this->apiUrlJsonPlaceholder.'/posts',
+                [
+                    'headers' => [
+                        'Content-Type' => 'application/json',
+                    ],
+                    'body' => json_encode(
+                        [
+                            'title' => $post->title->value(),
+                            'body' => $post->body->value(),
+                            'userId' => $post->authorId->value(),
+                        ]
+                    ),
+                ]
+            );
+
+            if (201 === $response->getStatusCode()) {
+                return (int) $response->toArray()['id'];
+            }
+        } catch (\Throwable $th) {
+        }
+
+        throw new PostNotCreated();
     }
 
     /**
