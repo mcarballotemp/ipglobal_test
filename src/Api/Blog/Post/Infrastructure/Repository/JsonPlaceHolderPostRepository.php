@@ -9,6 +9,9 @@ use App\Api\Blog\Post\Domain\PostNotExists;
 use App\Api\Blog\Post\Domain\PostRepository;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
+/**
+ * @phpstan-type PostJSonData array{id: int, userId: int, title: string, body: string}
+ */
 class JsonPlaceHolderPostRepository implements PostRepository
 {
     public function __construct(
@@ -40,7 +43,7 @@ class JsonPlaceHolderPostRepository implements PostRepository
     }
 
     /**
-     * @return array{id: int, userId: int, title: string, body: string}
+     * @return PostJSonData
      */
     private function fetchPostById(int $id): array
     {
@@ -67,7 +70,7 @@ class JsonPlaceHolderPostRepository implements PostRepository
     }
 
     /**
-     * @return array<array{id: int, userId: int, title: string, body: string}>
+     * @return array<PostJSonData>
      */
     private function fetchPosts(): array
     {
@@ -116,36 +119,32 @@ class JsonPlaceHolderPostRepository implements PostRepository
     }
 
     /**
-     * @param array{id: int, userId: int, title: string, body: string} $post
+     * @param PostJSonData $post
      */
-    private function transformToPost(array $post): Post
+    private function transformToPost($post): Post
     {
-        return Post::fromArray([
-            'id' => $post['id'],
-            'authorId' => $post['userId'],
-            'title' => $post['title'],
-            'body' => $post['body'],
-        ]);
+        return Post::fromPrimitives(
+            $post['id'],
+            $post['userId'],
+            $post['title'],
+            $post['body'],
+        );
     }
 
     /**
-     * @param array<array{id: int, userId: int, title: string, body: string}> $posts
+     * @param array<PostJSonData> $posts
      */
     private function transformToCollection(array $posts): PostCollection
     {
-        $posts = array_map(function ($post) {
-            return [
-                'id' => $post['id'],
-                'authorId' => $post['userId'],
-                'title' => $post['title'],
-                'body' => $post['body'],
-            ];
-        }, $posts);
-
         return new PostCollection(
             ...array_map(
                 function ($post) {
-                    return Post::fromArray($post);
+                    return Post::fromPrimitives(
+                        $post['id'],
+                        $post['userId'],
+                        $post['title'],
+                        $post['body'],
+                    );
                 },
                 $posts
             )
