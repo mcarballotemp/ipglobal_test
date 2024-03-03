@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @phpstan-type postData array{authorId:int, title:string, body:string}
+ * @phpstan-type responseData array{id:int, authorId:int, title:string, body:string}
  */
 class PostCreateControllerTest extends BaseFunctional
 {
@@ -31,6 +32,7 @@ class PostCreateControllerTest extends BaseFunctional
         $this->assertEquals(Response::HTTP_CREATED, $this->client->getResponse()->getStatusCode());
         $this->assertJson($content);
 
+        /** @var responseData */
         $response = json_decode($content, true);
 
         $this->assertEquals('101', $response['id']);
@@ -98,12 +100,12 @@ class PostCreateControllerTest extends BaseFunctional
             [
                 [
                     'authorId' => 6,
-                    'title' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, ' .
-                        'sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ' .
-                        'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris ' .
-                        'nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in ' .
-                        'reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla ' .
-                        'pariatur. Excepteur sint occaecat cupidatat non proident, sunt in ' .
+                    'title' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, '.
+                        'sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. '.
+                        'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris '.
+                        'nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in '.
+                        'reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla '.
+                        'pariatur. Excepteur sint occaecat cupidatat non proident, sunt in '.
                         'culpa qui officia deserunt mollit anim id est laborum',
                     'body' => 'body menos corto',
                 ],

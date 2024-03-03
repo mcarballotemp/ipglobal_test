@@ -12,6 +12,9 @@ class GetAllPost
     ) {
     }
 
+    /**
+     * @return array<PostDTO>
+     */
     public function __invoke(): array
     {
         $postCollection = $this->repository->findAll();

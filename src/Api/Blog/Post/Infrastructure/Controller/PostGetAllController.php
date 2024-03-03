@@ -4,7 +4,6 @@ namespace App\Api\Blog\Post\Infrastructure\Controller;
 
 use App\Api\Blog\Post\Application\DTO\PostDTO;
 use App\Api\Blog\Post\Application\GetAllPost;
-use App\Api\Blog\Post\Domain\PostCollection;
 use App\Shared\Controller\ControllerInterface;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use OpenApi\Attributes as OA;

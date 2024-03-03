@@ -2,11 +2,11 @@
 
 namespace App\Api\Blog\Author\Application;
 
-use App\Api\Blog\Author\Domain\AuthorRepository;
 use App\Api\Blog\Author\Application\DTO\AuthorAddressDTO;
 use App\Api\Blog\Author\Application\DTO\AuthorAddressGeoDTO;
 use App\Api\Blog\Author\Application\DTO\AuthorCompanyDTO;
 use App\Api\Blog\Author\Application\DTO\AuthorDTO;
+use App\Api\Blog\Author\Domain\AuthorRepository;
 
 class GetByIdAuthor
 {
@@ -29,8 +29,8 @@ class GetByIdAuthor
                 $author->address->city()->value(),
                 $author->address->zipcode()->value(),
                 new AuthorAddressGeoDTO(
-                    $author->address->geo()->lat()->value(),
-                    $author->address->geo()->lat()->value(),
+                    strval($author->address->geo()->lat()->value()),
+                    strval($author->address->geo()->lat()->value()),
                 )
             ),
             $author->phone->value(),

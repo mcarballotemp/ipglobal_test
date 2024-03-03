@@ -11,7 +11,7 @@ class AuthorGetByIdControllerTest extends BaseFunctional
     #[DataProvider('authorIdProvider')]
     public function testGetAuthorById(int $authorId): void
     {
-        $this->client->request('GET', '/api/blog/authors/' . $authorId);
+        $this->client->request('GET', '/api/blog/authors/'.$authorId);
 
         $content = (string) $this->client->getResponse()->getContent();
 
@@ -33,7 +33,7 @@ class AuthorGetByIdControllerTest extends BaseFunctional
     #[DataProvider('authorWrongsIdProvider')]
     public function testGetAuthorByWrongId(int $authorId): void
     {
-        $this->client->request('GET', '/api/blog/authors/' . $authorId);
+        $this->client->request('GET', '/api/blog/authors/'.$authorId);
 
         $this->assertEquals(Response::HTTP_NOT_FOUND, $this->client->getResponse()->getStatusCode());
     }

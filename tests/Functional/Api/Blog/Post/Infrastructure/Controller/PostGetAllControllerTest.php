@@ -38,7 +38,7 @@ class PostGetAllControllerTest extends BaseFunctional
     private function getExpectedKeys(): array
     {
         return [
-            'id', 'authorId', 'title', 'body'
+            'id', 'authorId', 'title', 'body',
         ];
     }
 }

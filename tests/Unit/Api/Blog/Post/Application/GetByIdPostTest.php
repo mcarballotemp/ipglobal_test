@@ -42,7 +42,7 @@ class GetByIdPostTest extends TestCase
                 2,
                 'dolorem eum magni eos aperiam quia',
                 'dolorem eum magni eos aperiam quia'
-            )
+            ),
         ]];
     }
 }

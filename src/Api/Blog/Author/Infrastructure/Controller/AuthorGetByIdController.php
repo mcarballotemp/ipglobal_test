@@ -2,8 +2,8 @@
 
 namespace App\Api\Blog\Author\Infrastructure\Controller;
 
-use App\Api\Blog\Author\Application\GetByIdAuthor;
 use App\Api\Blog\Author\Application\DTO\AuthorDTO;
+use App\Api\Blog\Author\Application\GetByIdAuthor;
 use App\Shared\Controller\ControllerInterface;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use OpenApi\Attributes as OA;

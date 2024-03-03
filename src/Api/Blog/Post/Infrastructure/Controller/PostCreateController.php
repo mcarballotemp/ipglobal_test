@@ -3,9 +3,7 @@
 namespace App\Api\Blog\Post\Infrastructure\Controller;
 
 use App\Api\Blog\Post\Application\CreatePost;
-use App\Api\Blog\Post\Domain\Post;
 use App\Api\Blog\Post\Infrastructure\DTO\PostCreateInputDTO;
-use App\Api\Blog\Post\Infrastructure\DTO\PostCreateOutputDTO;
 use App\Shared\Controller\BaseController;
 use App\Shared\Controller\ControllerInterface;
 use Nelmio\ApiDocBundle\Annotation\Model;
