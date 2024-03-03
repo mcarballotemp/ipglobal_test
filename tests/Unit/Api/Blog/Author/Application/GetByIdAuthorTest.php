@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Tests\Api\Blog\Author\Application;
+namespace App\Tests\Unit\Api\Blog\Author\Application;
 
 use App\Api\Blog\Author\Application\GetByIdAuthor;
 use App\Api\Blog\Author\Domain\Author;

@@ -6,3 +6,9 @@ csfix:
 
 test:
 	docker-compose exec phpfpm composer test
+
+testunit:
+	docker-compose exec phpfpm composer test-unit
+
+testfunc:
+	docker-compose exec phpfpm composer test-func
