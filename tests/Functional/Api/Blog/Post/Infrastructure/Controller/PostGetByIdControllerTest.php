@@ -13,11 +13,13 @@ class PostGetByIdControllerTest extends BaseFunctional
     {
         $this->client->request('GET', '/api/blog/posts/'.$postId);
 
-        $this->assertEquals(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
-        $this->assertJson($this->client->getResponse()->getContent());
+        $content = (string) $this->client->getResponse()->getContent();
 
-        $responseContent = json_decode($this->client->getResponse()->getContent(), true);
-        $actualKeys = array_keys($responseContent);
+        $this->assertEquals(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
+        $this->assertJson($content);
+
+        $responseContent = json_decode($content, true);
+        $actualKeys = array_keys((array) $responseContent);
         $expectedKeys = $this->getExpectedKeys();
 
         sort($expectedKeys);
@@ -34,16 +36,25 @@ class PostGetByIdControllerTest extends BaseFunctional
         $this->assertEquals(Response::HTTP_NOT_FOUND, $this->client->getResponse()->getStatusCode());
     }
 
+    /**
+     * @return array<array<int>>
+     */
     public static function postIdProvider(): array
     {
         return [[1], [33], [99]];
     }
 
+    /**
+     * @return array<array<int>>
+     */
     public static function postWrongsIdProvider(): array
     {
         return [[300]];
     }
 
+    /**
+     * @return array<string>
+     */
     private function getExpectedKeys(): array
     {
         return [

@@ -12,16 +12,19 @@ class PostGetAllControllerTest extends BaseFunctional
         $this->client->request('GET', '/api/blog/posts');
 
         $this->assertEquals(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
-        $this->assertJson($this->client->getResponse()->getContent());
 
-        $responseContent = json_decode($this->client->getResponse()->getContent(), true);
+        $content = (string) $this->client->getResponse()->getContent();
+
+        $this->assertJson($content);
+
+        $responseContent = (array) json_decode($content, true);
 
         $this->assertGreaterThanOrEqual(100, count($responseContent));
 
         $expectedKeys = $this->getExpectedKeys();
 
         foreach ($responseContent as $postContent) {
-            $actualKeys = array_keys($postContent);
+            $actualKeys = array_keys((array) $postContent);
             sort($expectedKeys);
             sort($actualKeys);
 
@@ -29,6 +32,9 @@ class PostGetAllControllerTest extends BaseFunctional
         }
     }
 
+    /**
+     * @return array<string>
+     */
     private function getExpectedKeys(): array
     {
         return [

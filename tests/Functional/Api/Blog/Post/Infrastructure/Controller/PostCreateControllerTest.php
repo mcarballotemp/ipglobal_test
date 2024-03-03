@@ -6,8 +6,14 @@ use App\Tests\Functional\BaseFunctional;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * @phpstan-type postData array{authorId:int, title:string, body:string}
+ */
 class PostCreateControllerTest extends BaseFunctional
 {
+    /**
+     * @param postData $post
+     */
     #[DataProvider('postProvider')]
     public function testCreatePost($post): void
     {
@@ -17,16 +23,21 @@ class PostCreateControllerTest extends BaseFunctional
             [],
             [],
             ['CONTENT_TYPE' => 'application/json'],
-            json_encode($post)
+            (string) json_encode($post)
         );
 
-        $this->assertEquals(Response::HTTP_CREATED, $this->client->getResponse()->getStatusCode());
-        $this->assertJson($this->client->getResponse()->getContent());
+        $content = (string) $this->client->getResponse()->getContent();
 
-        $response = json_decode($this->client->getResponse()->getContent(), true);
+        $this->assertEquals(Response::HTTP_CREATED, $this->client->getResponse()->getStatusCode());
+        $this->assertJson($content);
+
+        $response = json_decode($content, true);
         $this->assertEquals(['id' => 101], $response);
     }
 
+    /**
+     * @return array<array<postData>>
+     */
     public static function postProvider(): array
     {
         return [

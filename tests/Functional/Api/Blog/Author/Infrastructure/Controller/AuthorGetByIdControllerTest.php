@@ -13,10 +13,12 @@ class AuthorGetByIdControllerTest extends BaseFunctional
     {
         $this->client->request('GET', '/api/blog/authors/'.$authorId);
 
-        $this->assertEquals(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
-        $this->assertJson($this->client->getResponse()->getContent());
+        $content = (string) $this->client->getResponse()->getContent();
 
-        $responseContent = json_decode($this->client->getResponse()->getContent(), true);
+        $this->assertEquals(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
+        $this->assertJson($content);
+
+        $responseContent = (array) json_decode($content, true);
         $actualKeys = array_keys($responseContent);
         $expectedKeys = $this->getExpectedKeys();
 
@@ -34,16 +36,25 @@ class AuthorGetByIdControllerTest extends BaseFunctional
         $this->assertEquals(Response::HTTP_NOT_FOUND, $this->client->getResponse()->getStatusCode());
     }
 
+    /**
+     * @return array<array<int>>
+     */
     public static function authorIdProvider(): array
     {
         return [[1], [3], [9]];
     }
 
+    /**
+     * @return array<array<int>>
+     */
     public static function authorWrongsIdProvider(): array
     {
         return [[100]];
     }
 
+    /**
+     * @return array<string>
+     */
     private function getExpectedKeys(): array
     {
         return [
