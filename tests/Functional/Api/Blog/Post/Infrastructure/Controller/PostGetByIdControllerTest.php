@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Tests\Functional\Api\Blog\Author\Infrastrcture\Controller;
+namespace App\Tests\Functional\Api\Blog\Post\Infrastrcture\Controller;
 
 use App\Tests\Functional\BaseFunctional;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Symfony\Component\HttpFoundation\Response;
 
-class AuthorGetByIdControllerTest extends BaseFunctional
+class PostGetByIdControllerTest extends BaseFunctional
 {
-    #[DataProvider('authorIdProvider')]
-    public function testGetAuthorById(int $authorId): void
+    #[DataProvider('postIdProvider')]
+    public function testGetPostById(int $postId): void
     {
-        $this->client->request('GET', '/api/blog/authors/' . $authorId);
+        $this->client->request('GET', '/api/blog/posts/' . $postId);
 
         $this->assertEquals(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
         $this->assertJson($this->client->getResponse()->getContent());
@@ -22,21 +22,21 @@ class AuthorGetByIdControllerTest extends BaseFunctional
         $this->assertJson($this->client->getResponse()->getContent());
     }
 
-    #[DataProvider('authorWrongsIdProvider')]
-    public function testGetAuthorByWrongId(int $authorId): void
+    #[DataProvider('postWrongsIdProvider')]
+    public function testGetPostByWrongId(int $postId): void
     {
-        $this->client->request('GET', '/api/blog/authors/' . $authorId);
+        $this->client->request('GET', '/api/blog/posts/' . $postId);
 
         $this->assertEquals(Response::HTTP_NOT_FOUND, $this->client->getResponse()->getStatusCode());
     }
 
-    public static function authorIdProvider(): array
+    public static function postIdProvider(): array
     {
-        return [[1], [3], [9]];
+        return [[1], [33], [99]];
     }
 
-    public static function authorWrongsIdProvider(): array
+    public static function postWrongsIdProvider(): array
     {
-        return [[100]];
+        return [[300]];
     }
 }

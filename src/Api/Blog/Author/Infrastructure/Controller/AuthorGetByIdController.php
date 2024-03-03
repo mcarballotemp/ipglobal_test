@@ -17,7 +17,7 @@ class AuthorGetByIdController implements ControllerInterface
     ) {
     }
 
-    #[Route('blog/author/{id}', name: 'get_author', methods: ['GET'])]
+    #[Route('blog/authors/{id}', name: 'get_author', methods: ['GET'])]
     #[OA\Response(
         response: 200,
         description: 'Return Author By ID',
