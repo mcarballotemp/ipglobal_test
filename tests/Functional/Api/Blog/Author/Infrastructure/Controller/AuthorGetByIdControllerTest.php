@@ -3,15 +3,14 @@
 namespace App\Tests\Functional\Api\Blog\Author\Infrastrcture\Controller;
 
 use App\Tests\Functional\BaseFunctional;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Symfony\Component\HttpFoundation\Response;
 
 class AuthorGetByIdControllerTest extends BaseFunctional
 {
-    public function testGetAuthorById(): void
+    #[DataProvider('authorIdProvider')]
+    public function testGetAuthorById(int $authorId): void
     {
-
-        $authorId = 1;
-
         $this->client->request('GET', '/api/blog/author/' . $authorId);
 
         $this->assertEquals(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
@@ -21,14 +20,23 @@ class AuthorGetByIdControllerTest extends BaseFunctional
 
         $this->assertNotEmpty($response);
         $this->assertJson($this->client->getResponse()->getContent());
-
-        //$this->assertJsonStringEqualsJsonString('', $client->getResponse()->getContent());
     }
 
-    protected function tearDown(): void
+    #[DataProvider('authorWrongsIdProvider')]
+    public function testGetAuthorByWrongId(int $authorId): void
     {
-        parent::tearDown();
+        $this->client->request('GET', '/api/blog/author/' . $authorId);
 
-        $this->restoreExceptionHandler();
+        $this->assertEquals(Response::HTTP_NOT_FOUND, $this->client->getResponse()->getStatusCode());
+    }
+
+    public static function authorIdProvider(): array
+    {
+        return [[1], [3], [9]];
+    }
+
+    public static function authorWrongsIdProvider(): array
+    {
+        return [[100], [300], [30]];
     }
 }

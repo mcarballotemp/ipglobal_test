@@ -26,14 +26,25 @@ class AuthorGetByIdController implements ControllerInterface
             items: new OA\Items(ref: new Model(type: AuthorGetByIdOutputDTO::class)),
         )
     )]
+    #[OA\Response(
+        response: 404,
+        description: 'Author not found'
+    )]
     #[OA\Tag(name: 'Blog - Author')]
     public function getAuthorById(int $id): JsonResponse
     {
-        return new JsonResponse(
-            AuthorGetByIdOutputDTO::fromAuthor(
-                $this->getByIdAuthor->__invoke($id)
-            ),
-            200
-        );
+        try {
+            return new JsonResponse(
+                AuthorGetByIdOutputDTO::fromAuthor(
+                    $this->getByIdAuthor->__invoke($id)
+                ),
+                200
+            );
+        } catch (\Throwable $th) {
+            return new JsonResponse(
+                $th->getMessage(),
+                404
+            );
+        }
     }
 }

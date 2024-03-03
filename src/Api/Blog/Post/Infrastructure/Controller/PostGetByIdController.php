@@ -28,19 +28,30 @@ class PostGetByIdController implements ControllerInterface
             items: new OA\Items(ref: new Model(type: PostGetByIdOutputDTO::class)),
         )
     )]
+    #[OA\Response(
+        response: 404,
+        description: 'Author not found'
+    )]
     #[OA\Tag(name: 'Blog - Post')]
     public function getById(int $id): JsonResponse
     {
-        /** @var Post */
-        $post = $this->getByIdPost->__invoke($id);
+        try {
+            /** @var Post */
+            $post = $this->getByIdPost->__invoke($id);
 
-        $output = new PostGetByIdOutputDTO(
-            $post->id->value(),
-            $post->authorId->value(),
-            $post->title->value(),
-            $post->body->value()
-        );
+            $output = new PostGetByIdOutputDTO(
+                $post->id->value(),
+                $post->authorId->value(),
+                $post->title->value(),
+                $post->body->value()
+            );
 
-        return new JsonResponse($output, Response::HTTP_OK);
+            return new JsonResponse($output, Response::HTTP_OK);
+        } catch (\Throwable $th) {
+            return new JsonResponse(
+                $th->getMessage(),
+                404
+            );
+        }
     }
 }

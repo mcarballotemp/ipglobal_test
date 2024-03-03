@@ -11,10 +11,11 @@ class GetByIdAuthorTest extends TestCase
 {
     public function testGetByIdAuthorReturnsAuthor(): void
     {
-        $authorRepositoryMock = $this->createMock(AuthorRepository::class);
-
         $authorId = 1;
+        
         $authorMock = $this->createMock(Author::class);
+
+        $authorRepositoryMock = $this->createMock(AuthorRepository::class);
         $authorRepositoryMock->expects($this->once())
             ->method('find')
             ->with($this->equalTo($authorId))
