@@ -10,14 +10,8 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 WORKDIR /var/www/html
 
-COPY . . 
+COPY . .
 
 RUN chown -R www-data:www-data /var/www /var/www/html
-
-ENV COMPOSER_ALLOW_SUPERUSER=1
-
-RUN composer install --optimize-autoloader
-
-RUN chown -R www-data:www-data /var/www/html
 
 EXPOSE 9000

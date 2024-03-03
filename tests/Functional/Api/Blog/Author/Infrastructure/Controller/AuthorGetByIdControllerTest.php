@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Tests\Functional\Api\Blog\Author\Infrastrcture\Controller;
+namespace App\Tests\Functional\Api\Blog\Author\Infrastructure\Controller;
 
 use App\Tests\Functional\BaseFunctional;
 use PHPUnit\Framework\Attributes\DataProvider;
