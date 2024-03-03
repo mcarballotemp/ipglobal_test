@@ -37,19 +37,15 @@ class AuthorCompany
         return $this->bs;
     }
 
-    /**
-     * @param array{
-     *   name: string,
-     *   catchPhrase: string,
-     *   bs: string
-     * } $company
-     */
-    public static function fromArray(array $company): self
-    {
+    public static function fromPrimitives(
+        string $name,
+        string $catchPhrase,
+        string $bs,
+    ): self {
         return new self(
-            new AuthorCompanyName($company['name']),
-            new AuthorCompanyCatchPhrase($company['catchPhrase']),
-            new AuthorCompanyBs($company['bs']),
+            new AuthorCompanyName($name),
+            new AuthorCompanyCatchPhrase($catchPhrase),
+            new AuthorCompanyBs($bs),
         );
     }
 }

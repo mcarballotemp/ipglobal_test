@@ -28,17 +28,13 @@ class AuthorAddressGeo
         return $this->lng;
     }
 
-    /**
-     * @param array{
-     *   lat: string,
-     *   lng: string
-     * } $geo
-     */
-    public static function fromArray(array $geo): self
-    {
+    public static function fromPrimitives(
+        string $lat,
+        string $lng,
+    ): self {
         return new self(
-            new AuthorAddressGeoLat(floatval($geo['lat'])),
-            new AuthorAddressGeoLng(floatval($geo['lng']))
+            new AuthorAddressGeoLat(floatval($lat)),
+            new AuthorAddressGeoLng(floatval($lng))
         );
     }
 }

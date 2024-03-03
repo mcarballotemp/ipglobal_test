@@ -23,39 +23,41 @@ class Author
     ) {
     }
 
-    /**
-     * @param array{
-     *   id: int,
-     *   name: string,
-     *   email: string,
-     *   address: array{
-     *     street: string,
-     *     suite: string,
-     *     city: string,
-     *     zipcode: string,
-     *     geo: array{
-     *       lat: string,
-     *       lng: string
-     *     }
-     *   },
-     *   phone: string,
-     *   company: array{
-     *     name: string,
-     *     catchPhrase: string,
-     *     bs: string
-     *   }
-     * } $author
-     */
-    public static function fromArray(array $author): self
-    {
+    public static function fromPrimitives(
+        int $id,
+        string $name,
+        string $email,
+        string $addressStreet,
+        string $addressSuite,
+        string $addressCity,
+        string $addressZipcode,
+        string $addressGeoLat,
+        string $addressGeoLng,
+        string $phone,
+        string $website,
+        string $companyName,
+        string $companyCatchPhrase,
+        string $companyBs,
+    ): self {
         return new self(
-            new AuthorId($author['id']),
-            new AuthorName($author['name']),
-            new AuthorEmail($author['email']),
-            AuthorAddress::fromArray($author['address']),
-            new AuthorPhone($author['phone']),
-            new AuthorWebsite($author['phone']),
-            AuthorCompany::fromArray($author['company']),
+            new AuthorId($id),
+            new AuthorName($name),
+            new AuthorEmail($email),
+            AuthorAddress::fromPrimitives(
+                $addressStreet,
+                $addressSuite,
+                $addressCity,
+                $addressZipcode,
+                $addressGeoLat,
+                $addressGeoLng,
+            ),
+            new AuthorPhone($phone),
+            new AuthorWebsite($website),
+            AuthorCompany::fromPrimitives(
+                $companyName,
+                $companyCatchPhrase,
+                $companyBs,
+            ),
         );
     }
 }

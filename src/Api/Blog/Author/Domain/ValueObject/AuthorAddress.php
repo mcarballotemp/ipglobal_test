@@ -55,26 +55,23 @@ class AuthorAddress
         return $this->geo;
     }
 
-    /**
-     * @param array{
-     *   street: string,
-     *   suite: string,
-     *   city: string,
-     *   zipcode: string,
-     *   geo: array{
-     *     lat: string,
-     *     lng: string,
-     *   }
-     * } $address
-     */
-    public static function fromArray(array $address): self
-    {
+    public static function fromPrimitives(
+        string $street,
+        string $suite,
+        string $city,
+        string $zipcode,
+        string $geoLat,
+        string $geoLng,
+    ): self {
         return new self(
-            new AuthorAddressStreet($address['street']),
-            new AuthorAddressSuite($address['suite']),
-            new AuthorAddressCity($address['city']),
-            new AuthorAddressZipCode($address['zipcode']),
-            AuthorAddressGeo::fromArray($address['geo']),
+            new AuthorAddressStreet($street),
+            new AuthorAddressSuite($suite),
+            new AuthorAddressCity($city),
+            new AuthorAddressZipCode($zipcode),
+            AuthorAddressGeo::fromPrimitives(
+                $geoLat,
+                $geoLng
+            ),
         );
     }
 }

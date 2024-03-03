@@ -8,6 +8,30 @@ use App\Api\Blog\Author\Domain\AuthorRepository;
 use App\Api\Blog\Shared\Domain\AuthorCheckIfExists;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
+/**
+ * @phpstan-type AuthorJsonData array{
+ *   id: int,
+ *   name: string,
+ *   email: string,
+ *   address: array{
+ *     street: string,
+ *     suite: string,
+ *     city: string,
+ *     zipcode: string,
+ *     geo: array{
+ *       lat: string,
+ *       lng: string
+ *     }
+ *   },
+ *   phone: string,
+ *   website: string,
+ *   company: array{
+ *     name: string,
+ *     catchPhrase: string,
+ *     bs: string
+ *   }
+ * }
+ */
 class JsonPlaceHolderAuthorRepository implements AuthorRepository, AuthorCheckIfExists
 {
     public function __construct(
@@ -18,7 +42,7 @@ class JsonPlaceHolderAuthorRepository implements AuthorRepository, AuthorCheckIf
 
     public function find(int $id): Author
     {
-        return Author::fromArray($this->fetchUserById($id));
+        return $this->transformToAuthor($this->fetchAuthorById($id));
     }
 
     public function exists(int $id): bool
@@ -34,29 +58,9 @@ class JsonPlaceHolderAuthorRepository implements AuthorRepository, AuthorCheckIf
     }
 
     /**
-     * @return array{
-     *   id: int,
-     *   name: string,
-     *   email: string,
-     *   address: array{
-     *     street: string,
-     *     suite: string,
-     *     city: string,
-     *     zipcode: string,
-     *     geo: array{
-     *       lat: string,
-     *       lng: string
-     *     }
-     *   },
-     *   phone: string,
-     *   company: array{
-     *     name: string,
-     *     catchPhrase: string,
-     *     bs: string
-     *   }
-     * }
+     * @return AuthorJsonData
      */
-    private function fetchUserById(int $id): array
+    private function fetchAuthorById(int $id)
     {
         try {
             $response = $this->client->request(
@@ -81,6 +85,7 @@ class JsonPlaceHolderAuthorRepository implements AuthorRepository, AuthorCheckIf
                             'lng' => $data['address']['geo']['lng'],
                         ],
                     ],
+                    'website' => $data['website'],
                     'phone' => $data['phone'],
                     'company' => [
                         'name' => $data['company']['name'],
@@ -93,5 +98,28 @@ class JsonPlaceHolderAuthorRepository implements AuthorRepository, AuthorCheckIf
         }
 
         throw new AuthorNotExists();
+    }
+
+    /**
+     * @param AuthorJsonData $author
+     */
+    private function transformToAuthor($author): Author
+    {
+        return Author::fromPrimitives(
+            $author['id'],
+            $author['name'],
+            $author['email'],
+            $author['address']['street'],
+            $author['address']['suite'],
+            $author['address']['city'],
+            $author['address']['zipcode'],
+            $author['address']['geo']['lat'],
+            $author['address']['geo']['lng'],
+            $author['phone'],
+            $author['website'],
+            $author['company']['name'],
+            $author['company']['catchPhrase'],
+            $author['company']['bs'],
+        );
     }
 }
