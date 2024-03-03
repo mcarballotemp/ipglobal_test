@@ -16,4 +16,17 @@ class Post
         public readonly PostBody $body
     ) {
     }
+
+    /**
+     * @param array{id: int, authorId: int, title: string, body: string} $post
+     */
+    public static function fromArray(array $post): self
+    {
+        return new self(
+            new PostId($post['id']),
+            new AuthorId($post['authorId']),
+            new PostTitle($post['title']),
+            new PostBody($post['body'])
+        );
+    }
 }

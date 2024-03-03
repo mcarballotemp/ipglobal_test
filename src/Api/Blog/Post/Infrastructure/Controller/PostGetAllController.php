@@ -5,7 +5,7 @@ namespace App\Api\Blog\Post\Infrastructure\Controller;
 use App\Api\Blog\Post\Application\GetAllPost;
 use App\Api\Blog\Post\Domain\Post;
 use App\Api\Blog\Post\Domain\PostCollection;
-use App\Api\Blog\Post\Infrastructure\DTO\PostOutputDTO;
+use App\Api\Blog\Post\Infrastructure\DTO\PostGetAllOutputDTO;
 use App\Shared\Controller\ControllerInterface;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use OpenApi\Attributes as OA;
@@ -25,7 +25,7 @@ class PostGetAllController implements ControllerInterface
         description: 'Return All Posts',
         content: new OA\JsonContent(
             type: 'array',
-            items: new OA\Items(ref: new Model(type: PostOutputDTO::class)),
+            items: new OA\Items(ref: new Model(type: PostGetAllOutputDTO::class)),
         )
     )]
     #[OA\Tag(name: 'Blog - Post')]
@@ -36,11 +36,9 @@ class PostGetAllController implements ControllerInterface
 
         $output = array_map(
             function (Post $post) {
-                return new PostOutputDTO(
+                return new PostGetAllOutputDTO(
                     $post->id->value(),
-                    $post->authorId->value(),
-                    $post->title->value(),
-                    $post->body->value(),
+                    $post->title->value()
                 );
             },
             $postCollection->getAll()
