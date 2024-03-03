@@ -5,7 +5,7 @@ namespace App\Api\Blog\Author\Application;
 use App\Api\Blog\Author\Domain\Author;
 use App\Api\Blog\Author\Domain\AuthorRepository;
 
-class GetById
+class GetByIdAuthor
 {
     public function __construct(
         private readonly AuthorRepository $repository

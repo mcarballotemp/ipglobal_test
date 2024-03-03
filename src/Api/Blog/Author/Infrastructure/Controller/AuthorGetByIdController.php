@@ -2,7 +2,7 @@
 
 namespace App\Api\Blog\Author\Infrastructure\Controller;
 
-use App\Api\Blog\Author\Application\GetById;
+use App\Api\Blog\Author\Application\GetByIdAuthor;
 use App\Api\Blog\Author\Infrastructure\DTO\AuthorGetByIdOutputDTO;
 use App\Shared\Controller\ControllerInterface;
 use Nelmio\ApiDocBundle\Annotation\Model;
@@ -13,7 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class AuthorGetByIdController implements ControllerInterface
 {
     public function __construct(
-        private readonly GetById $getById
+        private readonly GetByIdAuthor $getByIdAuthor
     ) {
     }
 
@@ -31,7 +31,7 @@ class AuthorGetByIdController implements ControllerInterface
     {
         return new JsonResponse(
             AuthorGetByIdOutputDTO::fromAuthor(
-                $this->getById->__invoke($id)
+                $this->getByIdAuthor->__invoke($id)
             ),
             200
         );
