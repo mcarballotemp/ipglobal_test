@@ -12,7 +12,7 @@ class GetByIdAuthorTest extends TestCase
     public function testGetByIdAuthorReturnsAuthor(): void
     {
         $authorId = 1;
-        
+
         $authorMock = $this->createMock(Author::class);
 
         $authorRepositoryMock = $this->createMock(AuthorRepository::class);

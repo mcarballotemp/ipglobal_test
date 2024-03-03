@@ -11,21 +11,25 @@ class AuthorGetByIdControllerTest extends BaseFunctional
     #[DataProvider('authorIdProvider')]
     public function testGetAuthorById(int $authorId): void
     {
-        $this->client->request('GET', '/api/blog/authors/' . $authorId);
+        $this->client->request('GET', '/api/blog/authors/'.$authorId);
 
         $this->assertEquals(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
         $this->assertJson($this->client->getResponse()->getContent());
 
-        $response = json_decode($this->client->getResponse()->getContent(), true);
+        $responseContent = json_decode($this->client->getResponse()->getContent(), true);
+        $actualKeys = array_keys($responseContent);
+        $expectedKeys = $this->getExpectedKeys();
 
-        $this->assertNotEmpty($response);
-        $this->assertJson($this->client->getResponse()->getContent());
+        sort($expectedKeys);
+        sort($actualKeys);
+
+        $this->assertEquals($expectedKeys, $actualKeys);
     }
 
     #[DataProvider('authorWrongsIdProvider')]
     public function testGetAuthorByWrongId(int $authorId): void
     {
-        $this->client->request('GET', '/api/blog/authors/' . $authorId);
+        $this->client->request('GET', '/api/blog/authors/'.$authorId);
 
         $this->assertEquals(Response::HTTP_NOT_FOUND, $this->client->getResponse()->getStatusCode());
     }
@@ -38,5 +42,12 @@ class AuthorGetByIdControllerTest extends BaseFunctional
     public static function authorWrongsIdProvider(): array
     {
         return [[100]];
+    }
+
+    private function getExpectedKeys(): array
+    {
+        return [
+            'id', 'name', 'email', 'address', 'geo', 'phone', 'website', 'company',
+        ];
     }
 }
