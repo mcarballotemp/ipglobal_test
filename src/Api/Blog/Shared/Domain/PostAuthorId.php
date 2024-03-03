@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Api\Blog\Post\Domain\ValueObject;
+namespace App\Api\Blog\Shared\Domain;
 
-class PostAuthorId
+class AuthorId
 {
     private int $authorId;
 
