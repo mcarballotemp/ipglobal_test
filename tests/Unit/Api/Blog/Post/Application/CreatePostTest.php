@@ -3,6 +3,7 @@
 namespace App\Tests\Unit\Api\Blog\Post\Application;
 
 use App\Api\Blog\Post\Application\CreatePost;
+use App\Api\Blog\Post\Application\DTO\PostDTO;
 use App\Api\Blog\Post\Domain\Post;
 use App\Api\Blog\Post\Domain\PostRepository;
 use App\Api\Blog\Shared\Domain\AuthorCheckIfExists;
@@ -53,8 +54,11 @@ class CreatePostTest extends TestCase
             $postTestData['body']
         );
 
-        $this->assertInstanceOf(Post::class, $result);
-        $this->assertSame($postCreated, $result);
+        $this->assertInstanceOf(PostDTO::class, $result);
+        $this->assertEquals($postCreated->id->value(), $result->id);
+        $this->assertEquals($postCreated->authorId->value(), $result->authorId);
+        $this->assertEquals($postCreated->title->value(), $result->title);
+        $this->assertEquals($postCreated->body->value(), $result->body);
     }
 
     /**

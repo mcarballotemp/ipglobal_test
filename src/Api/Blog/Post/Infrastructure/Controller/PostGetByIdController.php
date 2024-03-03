@@ -2,9 +2,8 @@
 
 namespace App\Api\Blog\Post\Infrastructure\Controller;
 
+use App\Api\Blog\Post\Application\DTO\PostDTO;
 use App\Api\Blog\Post\Application\GetByIdPost;
-use App\Api\Blog\Post\Domain\Post;
-use App\Api\Blog\Post\Infrastructure\DTO\PostGetByIdOutputDTO;
 use App\Shared\Controller\ControllerInterface;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use OpenApi\Attributes as OA;
@@ -24,8 +23,7 @@ class PostGetByIdController implements ControllerInterface
         response: 200,
         description: 'Return Post By Id',
         content: new OA\JsonContent(
-            type: 'array',
-            items: new OA\Items(ref: new Model(type: PostGetByIdOutputDTO::class)),
+            ref: new Model(type: PostDTO::class),
         )
     )]
     #[OA\Response(
@@ -36,17 +34,9 @@ class PostGetByIdController implements ControllerInterface
     public function getById(int $id): JsonResponse
     {
         try {
-            /** @var Post */
             $post = $this->getByIdPost->__invoke($id);
 
-            $output = new PostGetByIdOutputDTO(
-                $post->id->value(),
-                $post->authorId->value(),
-                $post->title->value(),
-                $post->body->value()
-            );
-
-            return new JsonResponse($output, Response::HTTP_OK);
+            return new JsonResponse($post, Response::HTTP_OK);
         } catch (\Throwable $th) {
             return new JsonResponse(
                 $th->getMessage(),

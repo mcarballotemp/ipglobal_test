@@ -2,6 +2,7 @@
 
 namespace App\Tests\Unit\Api\Blog\Author\Application;
 
+use App\Api\Blog\Author\Application\DTO\AuthorDTO;
 use App\Api\Blog\Author\Application\GetByIdAuthor;
 use App\Api\Blog\Author\Domain\Author;
 use App\Api\Blog\Author\Domain\AuthorRepository;
@@ -10,30 +11,48 @@ use PHPUnit\Framework\TestCase;
 
 class GetByIdAuthorTest extends TestCase
 {
-    #[DataProvider('authorIdProvider')]
-    public function testGetByIdAuthorReturnsAuthor(int $authorId): void
+    #[DataProvider('authorProvider')]
+    public function testGetByIdAuthorReturnsAuthor(Author $author): void
     {
-        $authorMock = $this->createMock(Author::class);
-
         $authorRepositoryMock = $this->createMock(AuthorRepository::class);
         $authorRepositoryMock->expects($this->once())
             ->method('find')
-            ->with($this->equalTo($authorId))
-            ->willReturn($authorMock);
+            ->with($this->equalTo($author->id->value()))
+            ->willReturn($author);
 
         $getByIdAuthor = new GetByIdAuthor($authorRepositoryMock);
 
-        $result = $getByIdAuthor($authorId);
+        $result = $getByIdAuthor($author->id->value());
 
-        $this->assertInstanceOf(Author::class, $result);
-        $this->assertSame($authorMock, $result);
+        $this->assertInstanceOf(AuthorDTO::class, $result);
+        $this->assertEquals($author->name->value(), $result->name);
+        $this->assertEquals($author->phone->value(), $result->phone);
     }
 
     /**
-     * @return array<array<int>>
+     * @return array<array<Author>>
      */
-    public static function authorIdProvider(): array
+    public static function authorProvider(): array
     {
-        return [[1], [3], [999]];
+        return [
+            [
+                Author::fromPrimitives(
+                    '1',
+                    "Leanne Graham",
+                    "Sincere@april.biz",
+                    "Kulas Light",
+                    "Apt. 556",
+                    "Gwenborough",
+                    "92998-3874",
+                    "-37.3159",
+                    "81.1496",
+                    "1-770-736-8031 x56442",
+                    "hildegard.org",
+                    "Romaguera-Crona",
+                    "Multi-layered client-server neural-net",
+                    "harness real-time e-markets"
+                )
+            ]
+        ];
     }
 }

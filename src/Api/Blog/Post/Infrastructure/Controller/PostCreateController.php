@@ -47,15 +47,14 @@ class PostCreateController extends BaseController implements ControllerInterface
 
         if ($input) {
             try {
-                /** @var Post */
-                $post = $createPost->__invoke(
+                $postCreated = $createPost->__invoke(
                     $input->authorId,
                     $input->title,
                     $input->body
                 );
 
                 return new JsonResponse(
-                    new PostCreateOutputDTO($post->id->value()),
+                    $postCreated,
                     Response::HTTP_CREATED
                 );
             } catch (\Throwable $th) {

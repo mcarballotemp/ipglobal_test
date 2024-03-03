@@ -3,7 +3,7 @@
 namespace App\Api\Blog\Author\Infrastructure\Controller;
 
 use App\Api\Blog\Author\Application\GetByIdAuthor;
-use App\Api\Blog\Author\Infrastructure\DTO\AuthorGetByIdOutputDTO;
+use App\Api\Blog\Author\Application\DTO\AuthorDTO;
 use App\Shared\Controller\ControllerInterface;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use OpenApi\Attributes as OA;
@@ -22,8 +22,7 @@ class AuthorGetByIdController implements ControllerInterface
         response: 200,
         description: 'Return Author By ID',
         content: new OA\JsonContent(
-            type: 'array',
-            items: new OA\Items(ref: new Model(type: AuthorGetByIdOutputDTO::class)),
+            ref: new Model(type: AuthorDTO::class),
         )
     )]
     #[OA\Response(
@@ -35,9 +34,7 @@ class AuthorGetByIdController implements ControllerInterface
     {
         try {
             return new JsonResponse(
-                AuthorGetByIdOutputDTO::fromAuthor(
-                    $this->getByIdAuthor->__invoke($id)
-                ),
+                $this->getByIdAuthor->__invoke($id),
                 200
             );
         } catch (\Throwable $th) {

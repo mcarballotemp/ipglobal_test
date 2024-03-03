@@ -2,7 +2,7 @@
 
 namespace App\Api\Blog\Post\Application;
 
-use App\Api\Blog\Post\Domain\Post;
+use App\Api\Blog\Post\Application\DTO\PostDTO;
 use App\Api\Blog\Post\Domain\PostRepository;
 
 class GetByIdPost
@@ -12,8 +12,15 @@ class GetByIdPost
     ) {
     }
 
-    public function __invoke(int $id): Post
+    public function __invoke(int $id): PostDTO
     {
-        return $this->repository->find($id);
+        $post = $this->repository->find($id);
+
+        return new PostDTO(
+            $post->id->value(),
+            $post->authorId->value(),
+            $post->title->value(),
+            $post->body->value(),
+        );
     }
 }

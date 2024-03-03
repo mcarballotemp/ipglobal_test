@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Api\Blog\Post\Infrastructure\DTO;
+namespace App\Api\Blog\Post\Application\DTO;
 
-readonly class PostGetByIdOutputDTO
+readonly class PostDTO
 {
     public function __construct(
         public int $id,
-        public int $userId,
+        public int $authorId,
         public string $title,
         public string $body,
     ) {
