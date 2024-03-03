@@ -29,10 +29,11 @@ class AuthorGetByIdController implements ControllerInterface
     #[OA\Tag(name: 'Blog - Author')]
     public function getAuthorById(int $id): JsonResponse
     {
-        $author = $this->getById->__invoke($id);
-
-        // $output = new AuthorGetByIdOutputDTO($id, '2');
-
-        return new JsonResponse($author, 200);
+        return new JsonResponse(
+            AuthorGetByIdOutputDTO::fromAuthor(
+                $this->getById->__invoke($id)
+            ),
+            200
+        );
     }
 }
