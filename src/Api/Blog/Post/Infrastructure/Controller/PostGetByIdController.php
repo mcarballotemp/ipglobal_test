@@ -34,9 +34,10 @@ class PostGetByIdController implements ControllerInterface
     public function getById(int $id): JsonResponse
     {
         try {
-            $post = $this->getByIdPost->__invoke($id);
-
-            return new JsonResponse($post, Response::HTTP_OK);
+            return new JsonResponse(
+                $this->getByIdPost->__invoke($id),
+                Response::HTTP_OK
+            );
         } catch (\Throwable $th) {
             return new JsonResponse(
                 $th->getMessage(),

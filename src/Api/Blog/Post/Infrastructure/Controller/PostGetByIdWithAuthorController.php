@@ -34,9 +34,10 @@ class PostGetByIdWithAuthorController implements ControllerInterface
     public function getById(int $id): JsonResponse
     {
         try {
-            $post = $this->getPostByIdWithAuthor->__invoke($id);
-
-            return new JsonResponse($post, Response::HTTP_OK);
+            return new JsonResponse(
+                $this->getPostByIdWithAuthor->__invoke($id),
+                Response::HTTP_OK
+            );
         } catch (\Throwable $th) {
             return new JsonResponse(
                 $th->getMessage(),

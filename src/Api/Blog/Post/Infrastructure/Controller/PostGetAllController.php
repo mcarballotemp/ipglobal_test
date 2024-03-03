@@ -30,8 +30,9 @@ class PostGetAllController implements ControllerInterface
     #[OA\Tag(name: 'Blog - Post')]
     public function getAllPosts(): JsonResponse
     {
-        $posts = $this->getAllPosts->__invoke();
-
-        return new JsonResponse($posts, Response::HTTP_OK);
+        return new JsonResponse(
+            $this->getAllPosts->__invoke(),
+            Response::HTTP_OK
+        );
     }
 }
