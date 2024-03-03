@@ -7,6 +7,9 @@ use App\Api\Blog\Post\Domain\PostCollection;
 use App\Api\Blog\Post\Domain\PostRepository;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
+/**
+ * @phpstan-type PostsData array<array{id: int, userId: int, title: string, body: string}>
+ */
 class JsonPlaceHolderPostRepository implements PostRepository
 {
     public function __construct(
@@ -21,7 +24,7 @@ class JsonPlaceHolderPostRepository implements PostRepository
     }
 
     /**
-     * @return array<array{id: int, userId: int, title: string, body: string}>
+     * @return PostsData
      */
     private function fetchPosts(): array
     {
@@ -41,7 +44,7 @@ class JsonPlaceHolderPostRepository implements PostRepository
     }
 
     /**
-     * @param array<array{id: int, userId: int, title: string, body: string}> $posts
+     * @param PostsData $posts
      */
     private function transform(array $posts): PostCollection
     {

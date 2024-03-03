@@ -24,10 +24,10 @@ readonly class AuthorGetByIdOutputDTO
             $author->id->value(),
             $author->name->value(),
             $author->email->value(),
-            $author->address->street()->value() . ', ' .
-                $author->address->suite()->value() . ', ' .
+            $author->address->street()->value().', '.
+                $author->address->suite()->value().', '.
                 $author->address->zipcode()->value(),
-            $author->address->geo()->lat()->value() . ', ' .
+            $author->address->geo()->lat()->value().', '.
                 $author->address->geo()->lng()->value(),
             $author->phone->value(),
             $author->website->value(),

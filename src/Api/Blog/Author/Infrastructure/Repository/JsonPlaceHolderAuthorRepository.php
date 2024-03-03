@@ -7,6 +7,29 @@ use App\Api\Blog\Author\Domain\AuthorNotExists;
 use App\Api\Blog\Author\Domain\AuthorRepository;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
+/**
+ * @phpstan-type AuthorData array{
+ *   id: int,
+ *   name: string,
+ *   email: string,
+ *   address: array{
+ *     street: string,
+ *     suite: string,
+ *     city: string,
+ *     zipcode: string,
+ *     geo: array{
+ *       lat: string,
+ *       lng: string
+ *     }
+ *   },
+ *   phone: string,
+ *   company: array{
+ *     name: string,
+ *     catchPhrase: string,
+ *     bs: string
+ *   }
+ * }
+ */
 class JsonPlaceHolderAuthorRepository implements AuthorRepository
 {
     public function __construct(
@@ -23,27 +46,7 @@ class JsonPlaceHolderAuthorRepository implements AuthorRepository
     }
 
     /**
-     * @return array{
-     *   id: int,
-     *   name: string,
-     *   email: string,
-     *   address: array{
-     *     street: string,
-     *     suite: string,
-     *     city: string,
-     *     zipcode: string,
-     *     geo: array{
-     *       lat: string,
-     *       lng: string
-     *     }
-     *   },
-     *   phone: string,
-     *   company: array{
-     *     name: string,
-     *     catchPhrase: string,
-     *     bs: string
-     *   }
-     * }
+     * @return AuthorData
      */
     private function fetchUserById(int $id): array
     {
@@ -85,27 +88,7 @@ class JsonPlaceHolderAuthorRepository implements AuthorRepository
     }
 
     /**
-     * @param array{
-     *   id: int,
-     *   name: string,
-     *   email: string,
-     *   address: array{
-     *     street: string,
-     *     suite: string,
-     *     city: string,
-     *     zipcode: string,
-     *     geo: array{
-     *       lat: string,
-     *       lng: string
-     *     }
-     *   },
-     *   phone: string,
-     *   company: array{
-     *     name: string,
-     *     catchPhrase: string,
-     *     bs: string
-     *   }
-     * } $authorData
+     * @param AuthorData $authorData
      */
     private function transform(array $authorData): Author
     {
