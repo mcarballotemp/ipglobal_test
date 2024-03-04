@@ -12,7 +12,7 @@ Arrancamos Docker:
 
 Al terminar, tenemos disponibles las siguientes URLs:
 
-Front: [http://localhost:8088/](http://localhost:8088/) (Por ahora redirige al API)
+Front: [http://localhost:8088/](http://localhost:8088/) (Por ahora redirige al API) 
 
 API Swagger/OpenAPI: [http://localhost:8088/api/doc](http://localhost:8088/api/doc)
 
