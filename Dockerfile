@@ -22,6 +22,4 @@ RUN php bin/console assets:install public
 
 RUN chown -R www-data:www-data /var/www /var/www/html
 
-COPY . . 
-
 EXPOSE 9000
