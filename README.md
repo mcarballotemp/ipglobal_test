@@ -64,6 +64,10 @@ Los endpoints disponibles en el API son los siguientes:
     GET /api/blog/posts/{id}
     GET /api/blog/posts/{id}/with/author
 
+## CI/CD
+
+Añadido workflow simple para ejecutar phpstan y tests antes de realizar el merge de una PR.
+
 ## Mejoras a Aplicar
 
 - Autenticación con JWT
