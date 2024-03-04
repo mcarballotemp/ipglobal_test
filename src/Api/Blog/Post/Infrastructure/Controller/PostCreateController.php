@@ -43,21 +43,21 @@ class PostCreateController extends BaseController implements ControllerInterface
             return $this->respondWithValidationErrors($errors);
         }
 
-        if ($input) {
-            try {
-                return new JsonResponse(
-                    $createPost->__invoke(
-                        $input->authorId,
-                        $input->title,
-                        $input->body
-                    ),
-                    Response::HTTP_CREATED
-                );
-            } catch (\Throwable $th) {
-                return new JsonResponse($th->getMessage(), Response::HTTP_BAD_REQUEST);
-            }
+        if (!$input) {
+            return new JsonResponse('', Response::HTTP_BAD_REQUEST);
         }
 
-        return new JsonResponse('', Response::HTTP_BAD_REQUEST);
+        try {
+            return new JsonResponse(
+                $createPost->__invoke(
+                    $input->authorId,
+                    $input->title,
+                    $input->body
+                ),
+                Response::HTTP_CREATED
+            );
+        } catch (\Throwable $th) {
+            return new JsonResponse($th->getMessage(), Response::HTTP_BAD_REQUEST);
+        }
     }
 }

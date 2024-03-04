@@ -8,7 +8,7 @@ class Faker
 
     public static function get(): \Faker\Generator
     {
-        if (self::$faker === null) {
+        if (null === self::$faker) {
             self::$faker = \Faker\Factory::create();
         }
 
