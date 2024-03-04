@@ -20,6 +20,8 @@ RUN composer install --no-dev --optimize-autoloader
 
 RUN php bin/console assets:install public
 
-RUN chown -R www-data:www-data /var/www/html
+RUN chown -R www-data:www-data /var/www /var/www/html
+
+COPY . . 
 
 EXPOSE 9000
