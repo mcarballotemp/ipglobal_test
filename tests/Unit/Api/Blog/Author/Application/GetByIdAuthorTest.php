@@ -13,7 +13,7 @@ use PHPUnit\Framework\TestCase;
 class GetByIdAuthorTest extends TestCase
 {
     #[DataProvider('authorProvider')]
-    public function test_GetByIdAuthor_ReturnsDTO(Author $author): void
+    public function testGetByIdAuthorReturnsDTO(Author $author): void
     {
         $authorRepositoryMock = $this->createMock(AuthorRepository::class);
         $authorRepositoryMock->expects($this->once())
@@ -45,13 +45,13 @@ class GetByIdAuthorTest extends TestCase
                     Faker::get()->streetAddress(),
                     Faker::get()->city(),
                     Faker::get()->postcode(),
-                    Faker::get()->latitude(-90, 90),
-                    Faker::get()->longitude(-180, 180),
+                    (string) Faker::get()->latitude(-90, 90),
+                    (string) Faker::get()->longitude(-180, 180),
                     Faker::get()->phoneNumber(),
                     Faker::get()->domainName(),
                     Faker::get()->title(),
-                    Faker::get()->catchPhrase(),
-                    Faker::get()->bs()
+                    Faker::get()->realText(30),
+                    Faker::get()->realText(30)
                 ),
             ],
         ];

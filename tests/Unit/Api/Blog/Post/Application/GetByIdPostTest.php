@@ -13,7 +13,7 @@ use PHPUnit\Framework\TestCase;
 class GetByIdPostTest extends TestCase
 {
     #[DataProvider('postProvider')]
-    public function test_GetByIdPost_ReturnsDTO(Post $post): void
+    public function testGetByIdPostReturnsDTO(Post $post): void
     {
         $postRepositoryMock = $this->createMock(PostRepository::class);
         $postRepositoryMock->expects($this->once())

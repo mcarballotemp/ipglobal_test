@@ -19,7 +19,7 @@ class GetAllPostTest extends TestCase
      * @param postData $postTestData
      */
     #[DataProvider('postProvider')]
-    public function test_GetAllPost_ReturnsArrayDTO($postTestData): void
+    public function testGetAllPostReturnsArrayDTO($postTestData): void
     {
         $post = Post::fromPrimitives(
             $postTestData['id'],

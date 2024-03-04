@@ -20,7 +20,7 @@ class CreatePostTest extends TestCase
      * @param postData $postTestData
      */
     #[DataProvider('postProvider')]
-    public function test_CreatePost_ReturnsDTO($postTestData): void
+    public function testCreatePostReturnsDTO($postTestData): void
     {
         $postCreated = Post::fromPrimitives(
             101,

@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\Response;
 class AuthorGetByIdControllerTest extends BaseFunctional
 {
     #[DataProvider('authorIdProvider')]
-    public function test_GetAuthorById_WithValidData_ReturnsAuthorDetails(int $authorId): void
+    public function testGetAuthorByIdWithValidDataReturnsAuthorDetails(int $authorId): void
     {
         $this->client->request('GET', '/api/blog/authors/'.$authorId);
 
@@ -31,7 +31,7 @@ class AuthorGetByIdControllerTest extends BaseFunctional
     }
 
     #[DataProvider('authorWrongsIdProvider')]
-    public function test_GetAuthorById_WithInvalidData_ReturnsNotFound(int $authorId): void
+    public function testGetAuthorByIdWithInvalidDataReturnsNotFound(int $authorId): void
     {
         $this->client->request('GET', '/api/blog/authors/'.$authorId);
 

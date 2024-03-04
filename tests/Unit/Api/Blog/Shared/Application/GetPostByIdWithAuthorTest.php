@@ -15,7 +15,7 @@ use PHPUnit\Framework\TestCase;
 class GetPostByIdWithAuthorTest extends TestCase
 {
     #[DataProvider('dataProvider')]
-    public function test_GetPostByIdWithAuthor_ReturnsDTO(Post $post, Author $author): void
+    public function testGetPostByIdWithAuthorReturnsDTO(Post $post, Author $author): void
     {
         $postRepositoryMock = $this->createMock(PostRepository::class);
         $postRepositoryMock->expects($this->once())
@@ -66,13 +66,13 @@ class GetPostByIdWithAuthorTest extends TestCase
                 Faker::get()->streetAddress(),
                 Faker::get()->city(),
                 Faker::get()->postcode(),
-                Faker::get()->latitude(-90, 90),
-                Faker::get()->longitude(-180, 180),
+                (string) Faker::get()->latitude(-90, 90),
+                (string) Faker::get()->longitude(-180, 180),
                 Faker::get()->phoneNumber(),
                 Faker::get()->domainName(),
                 Faker::get()->title(),
-                Faker::get()->catchPhrase(),
-                Faker::get()->bs()
+                Faker::get()->realText(30),
+                Faker::get()->realText(30)
             ),
         ]];
     }

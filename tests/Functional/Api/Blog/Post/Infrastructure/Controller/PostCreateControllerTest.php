@@ -17,7 +17,7 @@ class PostCreateControllerTest extends BaseFunctional
      * @param postData $post
      */
     #[DataProvider('postProvider')]
-    public function test_CreatePost_WithValidData_ReturnCreated($post): void
+    public function testCreatePostWithValidDataReturnCreated($post): void
     {
         $this->client->request(
             'POST',
@@ -46,7 +46,7 @@ class PostCreateControllerTest extends BaseFunctional
      * @param postData $post
      */
     #[DataProvider('postWrongProvider')]
-    public function test_CreatePost_WithInvalidData_ReturnCreated($post): void
+    public function testCreatePostWithInvalidDataReturnCreated($post): void
     {
         $this->client->request(
             'POST',

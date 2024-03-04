@@ -7,7 +7,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class PostGetAllControllerTest extends BaseFunctional
 {
-    public function test_GetAllPost_ReturnsAllPost(): void
+    public function testGetAllPostReturnsAllPost(): void
     {
         $this->client->request('GET', '/api/blog/posts');
 
