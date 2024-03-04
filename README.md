@@ -57,12 +57,12 @@ Se ha aplicado SOLID y Arquitectura Hexagonal al código en Backend.
 
 Los endpoints disponibles en el API son los siguientes:
 
-    GET /api/blog/authors/{id}
+    GET  /api/blog/authors/{id}
 
-    GET /api/blog/posts
+    GET  /api/blog/posts
     POST /api/blog/posts
-    GET /api/blog/posts/{id}
-    GET /api/blog/posts/{id}/with/author
+    GET  /api/blog/posts/{id}
+    GET  /api/blog/posts/{id}/with/author
 
 ## CI/CD
 
