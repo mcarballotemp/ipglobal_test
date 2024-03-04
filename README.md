@@ -1,5 +1,4 @@
 # Prueba Tecnica para IpGlobal
----
 
 ## Puesta en marcha
 
