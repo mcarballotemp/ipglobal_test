@@ -18,6 +18,8 @@ ENV COMPOSER_ALLOW_SUPERUSER=1
 
 RUN composer install --no-dev --optimize-autoloader
 
+RUN php bin/console assets:install public
+
 RUN chown -R www-data:www-data /var/www/html
 
 EXPOSE 9000
