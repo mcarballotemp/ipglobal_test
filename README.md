@@ -1,63 +1,70 @@
-# Prueba Tecnica para IpGlobal
+# Prueba Técnica para IpGlobal
 
-## Puesta en marcha
+## Puesta en Marcha
 
-Comenzamos clonando el repositorio
+Comenzamos clonando el repositorio:
 
     git clone git@github.com:mcarballotemp/ipglobal_test.git
 
-Arrancamos docker
+Arrancamos Docker:
 
     docker-compose up -d
 
-Al terminar tenemos disponibles las siguientes urls:
+Al terminar, tenemos disponibles las siguientes URLs:
 
-Front: [http://localhost:8088/](http://localhost:8088/)
+Front: [http://localhost:8088/](http://localhost:8088/) (Por ahora redirige al API)
 
-Api Swagger/OpenApi: [http://localhost:8088/api/doc](http://localhost:8088/api/doc)
+API Swagger/OpenAPI: [http://localhost:8088/api/doc](http://localhost:8088/api/doc)
 
-### Si queremos desarrollar, o ejecutar los test
+#### Si Queremos Desarrollar o Ejecutar los Tests:
 
-Arrancamos docker con el fichero especifico para dev
+Arrancamos Docker con el fichero específico para desarrollo:
 
     docker-compose -f docker-compose.dev.yml up -d --force-recreate --build
 
-Instalamos las dependencias
+Instalamos las dependencias:
 
     docker-compose exec phpfpm composer install
 
-## Comandos disponibles
+## Comandos Disponibles
 
 Dejo listo un pequeño Makefile con los siguientes comandos:
 
 PhpStan:
 
     make phpstan
-	docker-compose exec phpfpm composer phpstan
+    docker-compose exec phpfpm composer phpstan
 
 CsFix:
 
     make csfix
-	docker-compose exec phpfpm composer csfix
+    docker-compose exec phpfpm composer csfix
 
-Testing, pudiendo ejecutar por separado unitarios y funcionales
+Testing, pudiendo ejecutar por separado unitarios y funcionales:
 
     make test
-	docker-compose exec phpfpm composer test
+    docker-compose exec phpfpm composer test
 
     make testunit
-	docker-compose exec phpfpm composer test-unit
+    docker-compose exec phpfpm composer test-unit
 
     make testfunc
-	docker-compose exec phpfpm composer test-func
+    docker-compose exec phpfpm composer test-func
 
+## Descripción de la Prueba
 
-## Descripcion de la prueba
+Se ha aplicado SOLID y Arquitectura Hexagonal al código en Backend.
 
-Se ha aplicado SOLID y arquitectura hexagonal al codigo en Backend.
+Los endpoints disponibles en el API son los siguientes:
 
-## Mejoras a aplicar
+    GET /api/blog/authors/{id}
 
-- Autenticacion con JWT
+    GET /api/blog/posts
+    POST /api/blog/posts
+    GET /api/blog/posts/{id}
+    GET /api/blog/posts/{id}/with/author
+
+## Mejoras a Aplicar
+
+- Autenticación con JWT
 - CQRS
-
