@@ -16,6 +16,16 @@ Front: [http://localhost:8088/](http://localhost:8088/)
 
 Api Swagger/OpenApi: [http://localhost:8088/api/doc](http://localhost:8088/api/doc)
 
+### Si queremos desarrollar, o ejecutar los test
+
+Arrancamos docker con el fichero especifico para dev
+
+    docker-compose -f docker-compose.dev.yml up -d --force-recreate --build
+
+Instalamos las dependencias
+
+    docker-compose exec phpfpm composer install
+
 ## Comandos disponibles
 
 Dejo listo un pequeño Makefile con los siguientes comandos:
