@@ -28,7 +28,7 @@ Instalamos las dependencias:
 
 ## Comandos Disponibles
 
-Dejo listo un pequeño Makefile con los siguientes comandos:
+Dejo listo un pequeño Makefile con los siguientes comandos: 
 
 PhpStan:
 
