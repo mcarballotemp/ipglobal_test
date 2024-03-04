@@ -10,15 +10,11 @@ Arrancamos docker
 
     docker-compose up -d
 
-Al terminar tenemos disponibles las siguientes url:
+Al terminar tenemos disponibles las siguientes urls:
 
-Front:
+Front: [http://localhost:8088/](http://localhost:8088/)
 
-    http://localhost:8088/
-
-Api Swagger/OpenApi:
-
-    http://localhost:8088/api/doc
+Api Swagger/OpenApi: [http://localhost:8088/api/doc](http://localhost:8088/api/doc)
 
 ## Comandos disponibles
 
