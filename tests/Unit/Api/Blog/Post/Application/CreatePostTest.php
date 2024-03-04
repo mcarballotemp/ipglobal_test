@@ -7,6 +7,7 @@ use App\Api\Blog\Post\Application\DTO\PostDTO;
 use App\Api\Blog\Post\Domain\Post;
 use App\Api\Blog\Post\Domain\PostRepository;
 use App\Api\Blog\Shared\Domain\AuthorCheckIfExists;
+use App\Tests\Utilities\Faker;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
@@ -19,7 +20,7 @@ class CreatePostTest extends TestCase
      * @param postData $postTestData
      */
     #[DataProvider('postProvider')]
-    public function testCreatePost($postTestData): void
+    public function test_CreatePost_ReturnsDTO($postTestData): void
     {
         $postCreated = Post::fromPrimitives(
             101,
@@ -95,16 +96,16 @@ class CreatePostTest extends TestCase
             [
                 [
                     'authorId' => 1,
-                    'title' => 'titulo corto',
-                    'body' => 'body corto',
+                    'title' => Faker::get()->title(),
+                    'body' => Faker::get()->realText(200),
                     'authorExists' => true,
                 ],
             ],
             [
                 [
                     'authorId' => 6,
-                    'title' => 'titulo algo menos corto',
-                    'body' => 'body menos corto',
+                    'title' => Faker::get()->title(),
+                    'body' => Faker::get()->realText(300),
                     'authorExists' => true,
                 ],
             ],
@@ -120,22 +121,16 @@ class CreatePostTest extends TestCase
             [
                 [
                     'authorId' => 100,
-                    'title' => 'titulo corto',
-                    'body' => 'body corto',
+                    'title' => Faker::get()->title(),
+                    'body' => Faker::get()->realText(500),
                     'authorExists' => false,
                 ],
             ],
             [
                 [
                     'authorId' => 6,
-                    'title' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, '.
-                        'sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. '.
-                        'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris '.
-                        'nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in '.
-                        'reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla '.
-                        'pariatur. Excepteur sint occaecat cupidatat non proident, sunt in '.
-                        'culpa qui officia deserunt mollit anim id est laborum',
-                    'body' => 'body menos corto',
+                    'title' => Faker::get()->realText(1000),
+                    'body' => Faker::get()->realText(200),
                     'authorExists' => false,
                 ],
             ],

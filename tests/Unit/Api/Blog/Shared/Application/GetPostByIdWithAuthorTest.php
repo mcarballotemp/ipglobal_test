@@ -8,13 +8,14 @@ use App\Api\Blog\Post\Domain\Post;
 use App\Api\Blog\Post\Domain\PostRepository;
 use App\Api\Blog\Shared\Application\DTO\PostWithAuthorDTO;
 use App\Api\Blog\Shared\Application\GetPostByIdWithAuthor;
+use App\Tests\Utilities\Faker;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 class GetPostByIdWithAuthorTest extends TestCase
 {
     #[DataProvider('dataProvider')]
-    public function testGetPostByIdWithAuthor(Post $post, Author $author): void
+    public function test_GetPostByIdWithAuthor_ReturnsDTO(Post $post, Author $author): void
     {
         $postRepositoryMock = $this->createMock(PostRepository::class);
         $postRepositoryMock->expects($this->once())
@@ -54,24 +55,24 @@ class GetPostByIdWithAuthorTest extends TestCase
             Post::fromPrimitives(
                 1,
                 2,
-                'dolorem eum magni eos aperiam quia',
-                'dolorem eum magni eos aperiam quiadolorem eum magni eos aperiam quia'
+                Faker::get()->title(),
+                Faker::get()->realText(100)
             ),
             Author::fromPrimitives(
                 2,
-                'Leanne Graham',
-                'Sincere@april.biz',
-                'Kulas Light',
-                'Apt. 556',
-                'Gwenborough',
-                '92998-3874',
-                '-37.3159',
-                '81.1496',
-                '1-770-736-8031 x56442',
-                'hildegard.org',
-                'Romaguera-Crona',
-                'Multi-layered client-server neural-net',
-                'harness real-time e-markets'
+                Faker::get()->title(),
+                Faker::get()->email(),
+                Faker::get()->streetAddress(),
+                Faker::get()->streetAddress(),
+                Faker::get()->city(),
+                Faker::get()->postcode(),
+                Faker::get()->latitude(-90, 90),
+                Faker::get()->longitude(-180, 180),
+                Faker::get()->phoneNumber(),
+                Faker::get()->domainName(),
+                Faker::get()->title(),
+                Faker::get()->catchPhrase(),
+                Faker::get()->bs()
             ),
         ]];
     }

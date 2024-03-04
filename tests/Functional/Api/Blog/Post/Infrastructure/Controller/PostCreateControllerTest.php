@@ -3,6 +3,7 @@
 namespace App\Tests\Functional\Api\Blog\Post\Infrastructure\Controller;
 
 use App\Tests\Functional\BaseFunctional;
+use App\Tests\Utilities\Faker;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -16,7 +17,7 @@ class PostCreateControllerTest extends BaseFunctional
      * @param postData $post
      */
     #[DataProvider('postProvider')]
-    public function testCreatePost($post): void
+    public function test_CreatePost_WithValidData_ReturnCreated($post): void
     {
         $this->client->request(
             'POST',
@@ -45,7 +46,7 @@ class PostCreateControllerTest extends BaseFunctional
      * @param postData $post
      */
     #[DataProvider('postWrongProvider')]
-    public function testCreateWrongPost($post): void
+    public function test_CreatePost_WithInvalidData_ReturnCreated($post): void
     {
         $this->client->request(
             'POST',
@@ -70,15 +71,15 @@ class PostCreateControllerTest extends BaseFunctional
             [
                 [
                     'authorId' => 1,
-                    'title' => 'titulo corto',
-                    'body' => 'body corto',
+                    'title' => Faker::get()->title(),
+                    'body' => Faker::get()->realText(256),
                 ],
             ],
             [
                 [
                     'authorId' => 6,
-                    'title' => 'titulo algo menos corto',
-                    'body' => 'body menos corto',
+                    'title' => Faker::get()->title(),
+                    'body' => Faker::get()->realText(256),
                 ],
             ],
         ];
@@ -93,21 +94,15 @@ class PostCreateControllerTest extends BaseFunctional
             [
                 [
                     'authorId' => 100,
-                    'title' => 'titulo corto',
-                    'body' => 'body corto',
+                    'title' => Faker::get()->title(),
+                    'body' => Faker::get()->realText(256),
                 ],
             ],
             [
                 [
                     'authorId' => 6,
-                    'title' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, '.
-                        'sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. '.
-                        'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris '.
-                        'nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in '.
-                        'reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla '.
-                        'pariatur. Excepteur sint occaecat cupidatat non proident, sunt in '.
-                        'culpa qui officia deserunt mollit anim id est laborum',
-                    'body' => 'body menos corto',
+                    'title' => Faker::get()->realText(500),
+                    'body' => Faker::get()->realText(256),
                 ],
             ],
         ];

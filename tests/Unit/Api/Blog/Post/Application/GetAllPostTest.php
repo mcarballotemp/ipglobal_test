@@ -6,6 +6,7 @@ use App\Api\Blog\Post\Application\GetAllPost;
 use App\Api\Blog\Post\Domain\Post;
 use App\Api\Blog\Post\Domain\PostCollection;
 use App\Api\Blog\Post\Domain\PostRepository;
+use App\Tests\Utilities\Faker;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
@@ -18,7 +19,7 @@ class GetAllPostTest extends TestCase
      * @param postData $postTestData
      */
     #[DataProvider('postProvider')]
-    public function testGetAllPost($postTestData): void
+    public function test_GetAllPost_ReturnsArrayDTO($postTestData): void
     {
         $post = Post::fromPrimitives(
             $postTestData['id'],
@@ -58,16 +59,16 @@ class GetAllPostTest extends TestCase
                 [
                     'id' => 1,
                     'authorId' => 1,
-                    'title' => 'titulo corto',
-                    'body' => 'body corto',
+                    'title' => Faker::get()->title(),
+                    'body' => Faker::get()->realText(200),
                 ],
             ],
             [
                 [
                     'id' => 2,
                     'authorId' => 6,
-                    'title' => 'titulo algo menos corto',
-                    'body' => 'body menos corto',
+                    'title' => Faker::get()->title(),
+                    'body' => Faker::get()->realText(100),
                 ],
             ],
         ];

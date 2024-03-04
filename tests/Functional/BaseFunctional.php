@@ -9,10 +9,13 @@ class BaseFunctional extends WebTestCase
 {
     protected KernelBrowser $client;
 
+    protected \Faker\Generator $faker;
+
     protected function setUp(): void
     {
         parent::setUp();
         $this->client = static::createClient();
+        $this->faker = \Faker\Factory::create();
     }
 
     protected function tearDown(): void

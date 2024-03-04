@@ -12,7 +12,7 @@ use PHPUnit\Framework\TestCase;
 class GetByIdAuthorTest extends TestCase
 {
     #[DataProvider('authorProvider')]
-    public function testGetByIdAuthorReturnsAuthor(Author $author): void
+    public function test_GetByIdAuthor_ReturnsDTO(Author $author): void
     {
         $authorRepositoryMock = $this->createMock(AuthorRepository::class);
         $authorRepositoryMock->expects($this->once())
