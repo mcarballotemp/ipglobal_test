@@ -1,25 +1,52 @@
 <template>
-  <div>
-    <h1>Listado de Posts</h1>
-    <ul>
-      <li v-for="post in posts" :key="post.id">
-        <router-link :to="{ name: 'PostDetail', params: { id: post.id }}">{{ post.title }}</router-link>
-      </li>
-    </ul>
+  <div class="container">
+    <h1>Posts</h1>
+    <div class="table-responsive">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Título</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="post in posts" :key="post.id">
+            <td>
+              <router-link :to="{ name: 'PostDetail', params: { id: post.id }}">{{ post.title }}</router-link>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </template>
 
+
 <script>
+import axios from 'axios';
+
 export default {
   data() {
     return {
-      // Este sería un ejemplo de cómo podrías estructurar tus datos
-      posts: [
-        { id: 1, title: "Post 1", content: "Contenido del post 1" },
-        { id: 2, title: "Post 2", content: "Contenido del post 2" },
-        // Agrega más posts según sea necesario
-      ],
+      posts: [],
     };
+  },
+  created() {
+    this.loadPosts();
+  },
+  watch: {
+    '$route'(to, from) {
+      // Llamada para cargar los datos cuando cambia la ruta
+      this.loadPosts();
+    }
+  },
+  methods: {
+    loadPosts() {
+      axios.get('/api/blog/posts')
+        .then(response => {
+          this.posts = response.data;
+        })
+        .catch(error => console.error("Error loading Posts data", error));
+    },
   },
 };
 </script>

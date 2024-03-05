@@ -12,8 +12,6 @@ class IndexController extends AbstractController implements ControllerInterface
     #[Route('/')]
     public function index(): Response
     {
-        //return $this->redirect('/api/doc');
-
-        return $this->render('@Front/Post/list.html.twig', []);
+        return $this->render('@Front/base.html.twig');
     }
 }
