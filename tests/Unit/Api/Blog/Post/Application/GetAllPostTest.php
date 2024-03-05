@@ -57,16 +57,16 @@ class GetAllPostTest extends TestCase
         return [
             [
                 [
-                    'id' => 1,
-                    'authorId' => 1,
+                    'id' => 154,
+                    'authorId' => 178,
                     'title' => Faker::get()->title(),
                     'body' => Faker::get()->realText(200),
                 ],
             ],
             [
                 [
-                    'id' => 2,
-                    'authorId' => 6,
+                    'id' => 256,
+                    'authorId' => 600,
                     'title' => Faker::get()->title(),
                     'body' => Faker::get()->realText(100),
                 ],

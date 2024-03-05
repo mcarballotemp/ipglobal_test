@@ -8,7 +8,7 @@ use App\Api\Blog\Post\Domain\PostCollection;
 /**
  * @phpstan-import-type PostJSonData from \App\Shared\Infrastructure\ApiClient\JsonPlaceHolderApiClient
  */
-class JsonPlaceHolderTransformer
+class JsonPlaceHolderPostTransformer
 {
     /**
      * @param PostJSonData $post

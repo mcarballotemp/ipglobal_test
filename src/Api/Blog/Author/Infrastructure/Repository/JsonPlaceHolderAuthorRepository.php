@@ -4,6 +4,7 @@ namespace App\Api\Blog\Author\Infrastructure\Repository;
 
 use App\Api\Blog\Author\Domain\Author;
 use App\Api\Blog\Author\Domain\AuthorRepository;
+use App\Api\Blog\Author\Infrastructure\Transformer\JsonPlaceHolderAuthorTransformer;
 use App\Api\Blog\Shared\Domain\AuthorCheckIfExists;
 use App\Shared\Infrastructure\ApiClient\JsonPlaceHolderApiClient;
 
@@ -14,12 +15,13 @@ class JsonPlaceHolderAuthorRepository implements AuthorRepository, AuthorCheckIf
 {
     public function __construct(
         private readonly JsonPlaceHolderApiClient $apiClient,
+        private readonly JsonPlaceHolderAuthorTransformer $transformer
     ) {
     }
 
     public function find(int $id): Author
     {
-        return $this->transformToAuthor(
+        return $this->transformer->transformToAuthor(
             $this->apiClient->fetchAuthorById($id)
         );
     }
@@ -34,28 +36,5 @@ class JsonPlaceHolderAuthorRepository implements AuthorRepository, AuthorCheckIf
         }
 
         return false;
-    }
-
-    /**
-     * @param AuthorJsonData $author
-     */
-    private function transformToAuthor($author): Author
-    {
-        return Author::fromPrimitives(
-            $author['id'],
-            $author['name'],
-            $author['email'],
-            $author['address']['street'],
-            $author['address']['suite'],
-            $author['address']['city'],
-            $author['address']['zipcode'],
-            $author['address']['geo']['lat'],
-            $author['address']['geo']['lng'],
-            $author['phone'],
-            $author['website'],
-            $author['company']['name'],
-            $author['company']['catchPhrase'],
-            $author['company']['bs'],
-        );
     }
 }

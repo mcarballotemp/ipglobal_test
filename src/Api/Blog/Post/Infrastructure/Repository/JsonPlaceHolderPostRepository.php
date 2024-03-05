@@ -5,7 +5,7 @@ namespace App\Api\Blog\Post\Infrastructure\Repository;
 use App\Api\Blog\Post\Domain\Post;
 use App\Api\Blog\Post\Domain\PostCollection;
 use App\Api\Blog\Post\Domain\PostRepository;
-use App\Api\Blog\Post\Infrastructure\Transformer\JsonPlaceHolderTransformer;
+use App\Api\Blog\Post\Infrastructure\Transformer\JsonPlaceHolderPostTransformer;
 use App\Shared\Infrastructure\ApiClient\JsonPlaceHolderApiClient;
 
 /**
@@ -15,7 +15,7 @@ class JsonPlaceHolderPostRepository implements PostRepository
 {
     public function __construct(
         private readonly JsonPlaceHolderApiClient $apiClient,
-        private readonly JsonPlaceHolderTransformer $transformer,
+        private readonly JsonPlaceHolderPostTransformer $transformer,
     ) {
     }
 
