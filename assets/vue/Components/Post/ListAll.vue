@@ -5,7 +5,7 @@
       <table class="table">
         <thead>
           <tr>
-            <th>Título</th>
+            <th>Title</th>
           </tr>
         </thead>
         <tbody>
