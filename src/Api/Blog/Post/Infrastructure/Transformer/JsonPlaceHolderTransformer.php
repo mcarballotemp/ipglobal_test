@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Api\Blog\Post\Infrastructure\Repository;
+namespace App\Api\Blog\Post\Infrastructure\Transformer;
 
 use App\Api\Blog\Post\Domain\Post;
 use App\Api\Blog\Post\Domain\PostCollection;
 
 /**
- * @phpstan-import-type PostJSonData from JsonPlaceHolderPostRepository
+ * @phpstan-import-type PostJSonData from \App\Shared\Infrastructure\ApiClient\JsonPlaceHolderApiClient
  */
 class JsonPlaceHolderTransformer
 {

@@ -5,9 +5,11 @@ namespace App\Api\Blog\Post\Infrastructure\Repository;
 use App\Api\Blog\Post\Domain\Post;
 use App\Api\Blog\Post\Domain\PostCollection;
 use App\Api\Blog\Post\Domain\PostRepository;
+use App\Api\Blog\Post\Infrastructure\Transformer\JsonPlaceHolderTransformer;
+use App\Shared\Infrastructure\ApiClient\JsonPlaceHolderApiClient;
 
 /**
- * @phpstan-type PostJSonData array{id: int, userId: int, title: string, body: string}
+ * @phpstan-import-type AuthorJsonData from JsonPlaceHolderApiClient
  */
 class JsonPlaceHolderPostRepository implements PostRepository
 {
@@ -33,7 +35,11 @@ class JsonPlaceHolderPostRepository implements PostRepository
 
     public function create(Post $post): Post
     {
-        $savedId = $this->apiClient->savePost($post);
+        $savedId = $this->apiClient->savePost(
+            $post->title->value(),
+            $post->body->value(),
+            $post->authorId->value()
+        );
 
         return Post::fromPrimitives(
             $savedId,
