@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import PostListAll from './Components/Post/ListAll.vue';
-import PostDetail from './Components/Post/Detail.vue';
+import PostListAll from '../Components/Blog/Post/ListAll.vue';
+import PostDetail from '../Components/Blog/Post/Detail.vue';
 
 const routes = [
   { path: '/', name: 'PostListAll', component: PostListAll, },
