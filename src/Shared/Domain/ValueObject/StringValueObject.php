@@ -15,7 +15,7 @@ abstract class StringValueObject
     protected function validate(string $value): void
     {
         if (empty(trim($value))) {
-            throw new \InvalidArgumentException(get_class($this) . ' cannot be empty.');
+            throw new \InvalidArgumentException(get_class($this).' cannot be empty.');
         }
     }
 

@@ -2,28 +2,17 @@
 
 namespace App\Api\Blog\Post\Domain\ValueObject;
 
-class PostBody
+use App\Shared\Domain\ValueObject\StringValueObject;
+
+class PostBody extends StringValueObject
 {
-    private string $body;
-
-    public function __construct(string $body)
+    protected function validate(string $value): void
     {
-        $this->validate($body);
-        $this->body = $body;
-    }
-
-    private function validate(string $body): void
-    {
-        if (empty($body)) {
+        if (empty($value)) {
             throw new \InvalidArgumentException('PostBody cannot be empty.');
         }
-        if (strlen($body) > 4096) {
+        if (strlen($value) > 4096) {
             throw new \InvalidArgumentException('PostBody cannot exceed 4096 characters.');
         }
-    }
-
-    public function value(): string
-    {
-        return $this->body;
     }
 }

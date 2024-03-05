@@ -2,25 +2,16 @@
 
 namespace App\Api\Blog\Shared\Domain;
 
-class AuthorId
+use App\Shared\Domain\ValueObject\IntegerValueObject;
+
+class AuthorId extends IntegerValueObject
 {
-    private int $authorId;
-
-    public function __construct(int $authorId)
+    protected function validate(int $value): void
     {
-        $this->validate($authorId);
-        $this->authorId = $authorId;
-    }
+        parent::validate($value);
 
-    private function validate(int $authorId): void
-    {
-        if ($authorId <= 0) {
+        if ($value <= 0) {
             throw new \InvalidArgumentException('PostAuthorId must be greater than 0.');
         }
-    }
-
-    public function value(): int
-    {
-        return $this->authorId;
     }
 }

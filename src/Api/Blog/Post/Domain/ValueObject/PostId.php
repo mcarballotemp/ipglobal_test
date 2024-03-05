@@ -2,30 +2,21 @@
 
 namespace App\Api\Blog\Post\Domain\ValueObject;
 
-class PostId
+use App\Shared\Domain\ValueObject\IntegerValueObject;
+
+class PostId extends IntegerValueObject
 {
-    private int $id;
-
-    public function __construct(int $id)
-    {
-        $this->validate($id);
-        $this->id = $id;
-    }
-
     public static function create(): self
     {
         return new self(0);
     }
 
-    private function validate(int $id): void
+    protected function validate(int $value): void
     {
-        if ($id < 0) {
+        parent::validate($value);
+
+        if ($value < 0) {
             throw new \InvalidArgumentException('PostId must be greater or equal than 0');
         }
-    }
-
-    public function value(): int
-    {
-        return $this->id;
     }
 }

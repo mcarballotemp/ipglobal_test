@@ -14,9 +14,8 @@ abstract class FloatValueObject
 
     protected function validate(float $value): void
     {
-        print_r($value);
-        if (is_float($value)) {
-            throw new \InvalidArgumentException(get_class($this) . ' is not float.');
+        if (!is_float($value)) {
+            throw new \InvalidArgumentException(get_class($this).' is not float.');
         }
     }
 

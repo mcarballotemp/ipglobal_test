@@ -2,28 +2,19 @@
 
 namespace App\Api\Blog\Post\Domain\ValueObject;
 
-class PostTitle
+use App\Shared\Domain\ValueObject\StringValueObject;
+
+class PostTitle extends StringValueObject
 {
-    private string $title;
-
-    public function __construct(string $title)
+    protected function validate(string $value): void
     {
-        $this->validate($title);
-        $this->title = $title;
-    }
+        parent::validate($value);
 
-    private function validate(string $title): void
-    {
-        if (empty($title)) {
+        if (empty($value)) {
             throw new \InvalidArgumentException('PostTitle cannot be empty.');
         }
-        if (strlen($title) > 2156) {
+        if (strlen($value) > 2156) {
             throw new \InvalidArgumentException('PostTitle cannot exceed 256 characters.');
         }
-    }
-
-    public function value(): string
-    {
-        return $this->title;
     }
 }
