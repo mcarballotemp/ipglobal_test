@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <h1>{{ post.title.toUpperCase() }}</h1>
+    <h1>{{ post.title }}</h1>
     <p>{{ post.body }}</p>
     <div class="card">
       <div class="card-body">
@@ -23,7 +23,7 @@
       </div>
     </div>
     <div class="mt-3">
-      <router-link to="/" class="btn btn-primary">Volver al listado</router-link>
+      <router-link to="/" class="btn btn-primary">Back</router-link>
     </div>
   </div>
 </template>
