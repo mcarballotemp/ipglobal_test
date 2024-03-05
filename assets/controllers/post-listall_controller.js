@@ -20,10 +20,14 @@ export default class extends Controller {
         data.forEach(item => {
             console.log(this.templateTarget);
             const element = this.templateTarget.content.cloneNode(true);
+            console.log('hola2');
+            console.log(element);
+            console.log('hola');
+            console.log(element.querySelector('[data-post-listall-target="title"]'));
 
-            element.querySelector("[data-target='post-listall.title']").textContent = item.title;
+            //element.querySelector("[data-post-listall-target='title']").textContent = item.title;
 
-            this.element.appendChild(document.importNode(element, true));
+            //this.element.appendChild(document.importNode(element, true));
         });
     }
 }
