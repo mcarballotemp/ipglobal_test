@@ -12,7 +12,7 @@ Arrancamos Docker:
 
 Al terminar, tenemos disponibles las siguientes URLs:
 
-Front: [http://localhost:8088/](http://localhost:8088/) (Por ahora redirige al API)
+Front: [http://localhost:8088/](http://localhost:8088/)
 
 API Swagger/OpenAPI: [http://localhost:8088/api/doc](http://localhost:8088/api/doc)
 
@@ -55,7 +55,9 @@ Testing, pudiendo ejecutar por separado unitarios y funcionales:
 
 ## Descripción de la Prueba
 
-Se ha aplicado SOLID y Arquitectura Hexagonal al código en Backend.
+Se ha aplicado SOLID y Arquitectura Hexagonal al código en Backend. 
+
+He utilizado como sustituto de la base de datos la opción de JsonPlaceholder.
 
 Los endpoints disponibles en el API son los siguientes:
 
@@ -65,6 +67,10 @@ Los endpoints disponibles en el API son los siguientes:
     POST /api/blog/posts
     GET  /api/blog/posts/{id}
     GET  /api/blog/posts/{id}/with/author
+
+En cuanto al frontal, instalé Webpack Encore y Vue. 
+Realicé de manera simple el frontal haciendo llamadas con axios a los endpoints anteriores.
+
 
 ## CI/CD
 
