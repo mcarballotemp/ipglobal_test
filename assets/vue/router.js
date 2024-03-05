@@ -3,17 +3,8 @@ import PostListAll from './Components/Post/ListAll.vue';
 import PostDetail from './Components/Post/Detail.vue';
 
 const routes = [
-  {
-    path: '/',
-    name: 'PostListAll',
-    component: PostListAll,
-  },
-  {
-    path: '/post/:id',
-    name: 'PostDetail',
-    component: PostDetail,
-    props: true,
-  },
+  { path: '/', name: 'PostListAll', component: PostListAll, },
+  { path: '/post/:id', name: 'PostDetail', component: PostDetail },
 ];
 
 const router = createRouter({
