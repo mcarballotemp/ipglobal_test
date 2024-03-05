@@ -25,6 +25,8 @@ Arrancamos Docker con el fichero específico para desarrollo:
 Instalamos las dependencias:
 
     docker-compose exec phpfpm composer install
+    docker-compose exec phpfpm npm install
+    docker-compose exec phpfpm npm run build
 
 ## Comandos Disponibles
 
