@@ -1,16 +1,19 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        {% block stylesheets %}
-            {{ encore_entry_link_tags('app') }}
-        {% endblock %}
+	<head>
+		{% block stylesheets %}
+			{{ encore_entry_link_tags('app') }}
+		{% endblock %}
 
-        {% block javascripts %}
-            {{ encore_entry_script_tags('app') }}
-        {% endblock %}
-    </head>
+		{% block javascripts %}
+			{{ encore_entry_script_tags('app') }}
+		{% endblock %}
+	</head>
 
-    <body>
-        {% block body %}{% endblock %}
-    </body>
+	<body>
+		{% include '@Front/header.html.twig' %}
+		<section class="py-5 container"> 
+            {% block body %}{% endblock %}
+		</section>
+	</body>
 </html>
