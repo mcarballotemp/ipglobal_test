@@ -2,25 +2,16 @@
 
 namespace App\Api\Blog\Author\Domain\ValueObject\AuthorAddress;
 
-class AuthorAddressZipCode
+use App\Shared\Domain\ValueObject\StringValueObject;
+
+class AuthorAddressZipCode extends StringValueObject
 {
-    private string $zipcode;
-
-    public function __construct(string $zipcode)
+    protected function validate(string $zipcode): void
     {
-        $this->validate($zipcode);
-        $this->zipcode = $zipcode;
-    }
+        parent::validate($zipcode);
 
-    private function validate(string $zipcode): void
-    {
         if (!preg_match('/^\d{5}(-\d{4})?$/', $zipcode)) {
             throw new \InvalidArgumentException('Zip code is invalid');
         }
-    }
-
-    public function value(): string
-    {
-        return $this->zipcode;
     }
 }

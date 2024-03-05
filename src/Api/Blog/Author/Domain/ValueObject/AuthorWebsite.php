@@ -2,25 +2,16 @@
 
 namespace App\Api\Blog\Author\Domain\ValueObject;
 
-class AuthorWebsite
+use App\Shared\Domain\ValueObject\StringValueObject;
+
+class AuthorWebsite extends StringValueObject
 {
-    private string $website;
-
-    public function __construct(string $website)
+    protected function validate(string $value): void
     {
-        $this->validate($website);
-        $this->website = $website;
-    }
+        parent::validate($value);
 
-    private function validate(string $website): void
-    {
-        if (!filter_var($website, FILTER_VALIDATE_DOMAIN)) {
+        if (!filter_var($value, FILTER_VALIDATE_DOMAIN)) {
             throw new \InvalidArgumentException('Website URL is invalid.');
         }
-    }
-
-    public function value(): string
-    {
-        return $this->website;
     }
 }

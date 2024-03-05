@@ -2,25 +2,16 @@
 
 namespace App\Api\Blog\Author\Domain\ValueObject\AuthorAddress\AuthorAddressGeo;
 
-class AuthorAddressGeoLng
+use App\Shared\Domain\ValueObject\FloatValueObject;
+
+class AuthorAddressGeoLng extends FloatValueObject
 {
-    private float $lng;
-
-    public function __construct(float $lng)
+    protected function validate(float $value): void
     {
-        $this->validate($lng);
-        $this->lng = $lng;
-    }
+        parent::validate($value);
 
-    private function validate(float $lng): void
-    {
-        if ($lng < -180 || $lng > 180) {
+        if ($value < -180 || $value > 180) {
             throw new \InvalidArgumentException('Longitude must be between -180 and 180');
         }
-    }
-
-    public function value(): float
-    {
-        return $this->lng;
     }
 }

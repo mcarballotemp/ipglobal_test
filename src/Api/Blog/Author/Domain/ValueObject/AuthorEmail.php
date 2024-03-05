@@ -2,28 +2,16 @@
 
 namespace App\Api\Blog\Author\Domain\ValueObject;
 
-class AuthorEmail
+use App\Shared\Domain\ValueObject\StringValueObject;
+
+class AuthorEmail extends StringValueObject
 {
-    private string $email;
-
-    public function __construct(string $email)
+    protected function validate(string $value): void
     {
-        $this->validate($email);
-        $this->email = $email;
-    }
+        parent::validate($value);
 
-    private function validate(string $email): void
-    {
-        if (empty(trim($email))) {
-            throw new \InvalidArgumentException('AuthorEmail cannot be empty.');
-        }
-        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        if (!filter_var($value, FILTER_VALIDATE_EMAIL)) {
             throw new \InvalidArgumentException('AuthorEmail is not valid.');
         }
-    }
-
-    public function value(): string
-    {
-        return $this->email;
     }
 }

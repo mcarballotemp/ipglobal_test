@@ -2,25 +2,16 @@
 
 namespace App\Api\Blog\Author\Domain\ValueObject\AuthorAddress\AuthorAddressGeo;
 
-class AuthorAddressGeoLat
+use App\Shared\Domain\ValueObject\FloatValueObject;
+
+class AuthorAddressGeoLat extends FloatValueObject
 {
-    private float $lat;
-
-    public function __construct(float $lat)
+    protected function validate(float $value): void
     {
-        $this->validate($lat);
-        $this->lat = $lat;
-    }
+        parent::validate($value);
 
-    private function validate(float $lat): void
-    {
-        if ($lat < -90 || $lat > 90) {
+        if ($value < -90 || $value > 90) {
             throw new \InvalidArgumentException('Latitude must be between -90 and 90');
         }
-    }
-
-    public function value(): float
-    {
-        return $this->lat;
     }
 }
