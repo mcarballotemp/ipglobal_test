@@ -28,11 +28,6 @@ export default {
   created() {
     this.loadPosts();
   },
-  watch: {
-    $route(to, from) {
-      this.loadPosts();
-    },
-  },
   methods: {
     loadPosts() {
       axios
