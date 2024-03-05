@@ -10,10 +10,10 @@
 						<th></th>
 					</tr>
 				</thead>
-				<tbody>
-					<tr>
+				<tbody {{ stimulus_controller('post-listall') }}>
+					<tr {{ stimulus_target('post-listall', 'template') }}>
 						<td>
-							<code>.container</code>
+							<a href="https://www.google.es" {{ stimulus_target('post-listall', 'title') }}></a>
 						</td>
 					</tr>
 				</tbody>
