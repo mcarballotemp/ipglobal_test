@@ -1,5 +1,5 @@
 <template>
-  <div class="container my-5">
+  <div class="container my-2">
     <div class="mb-4">
       <router-link to="/" class="btn btn-primary">← Back to Posts</router-link>
     </div>

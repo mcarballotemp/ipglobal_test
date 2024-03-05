@@ -80,3 +80,4 @@ Añadido workflow simple para ejecutar phpstan y tests antes de realizar el merg
 
 - Autenticación con JWT
 - CQRS
+- Cache
