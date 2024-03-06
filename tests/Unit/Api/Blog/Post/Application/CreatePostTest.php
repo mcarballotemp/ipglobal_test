@@ -7,7 +7,7 @@ use App\Api\Blog\Post\Application\DTO\PostDTO;
 use App\Api\Blog\Post\Domain\Post;
 use App\Api\Blog\Post\Domain\PostRepository;
 use App\Api\Blog\Shared\Domain\AuthorCheckIfExists;
-use App\Tests\Unit\Api\Blog\Shared\Factory\PostFactory;
+use App\Tests\Factory\PostFactory;
 use App\Tests\Utilities\Faker;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
@@ -15,7 +15,7 @@ use PHPUnit\Framework\TestCase;
 class CreatePostTest extends TestCase
 {
     #[DataProvider('postProvider')]
-    public function test_CreatePost_ReturnsDTO(Post $post): void
+    public function testCreatePostReturnsDTO(Post $post): void
     {
         $postCreated = $post;
 
@@ -79,10 +79,8 @@ class CreatePostTest extends TestCase
      */
     public static function postProvider(): array
     {
-        $posts = [];
-        for ($i = 0; $i < 5; $i++) {
-            $posts[] = [PostFactory::createRandom()];
-        }
-        return $posts;
+        return array_map(function () {
+            return [PostFactory::createRandom()];
+        }, range(1, 5));
     }
 }

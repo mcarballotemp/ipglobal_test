@@ -3,6 +3,7 @@
 namespace App\Tests\Functional\Api\Blog\Author\Infrastructure\Controller;
 
 use App\Tests\Functional\BaseFunctional;
+use App\Tests\Utilities\Faker;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -11,7 +12,7 @@ class AuthorGetByIdControllerTest extends BaseFunctional
     #[DataProvider('authorIdProvider')]
     public function testGetAuthorByIdWithValidDataReturnsAuthorDetails(int $authorId): void
     {
-        $this->client->request('GET', '/api/blog/authors/'.$authorId);
+        $this->client->request('GET', '/api/blog/authors/' . $authorId);
 
         $content = (string) $this->client->getResponse()->getContent();
 
@@ -33,7 +34,7 @@ class AuthorGetByIdControllerTest extends BaseFunctional
     #[DataProvider('authorWrongsIdProvider')]
     public function testGetAuthorByIdWithInvalidDataReturnsNotFound(int $authorId): void
     {
-        $this->client->request('GET', '/api/blog/authors/'.$authorId);
+        $this->client->request('GET', '/api/blog/authors/' . $authorId);
 
         $this->assertEquals(Response::HTTP_NOT_FOUND, $this->client->getResponse()->getStatusCode());
     }
@@ -43,7 +44,9 @@ class AuthorGetByIdControllerTest extends BaseFunctional
      */
     public static function authorIdProvider(): array
     {
-        return [[1], [3], [9]];
+        return array_map(function () {
+            return [Faker::get()->numberBetween(1, 9)];
+        }, range(1, 2));
     }
 
     /**
@@ -51,7 +54,9 @@ class AuthorGetByIdControllerTest extends BaseFunctional
      */
     public static function authorWrongsIdProvider(): array
     {
-        return [[100]];
+        return array_map(function () {
+            return [Faker::get()->numberBetween(102, 1000)];
+        }, range(1, 2));
     }
 
     /**

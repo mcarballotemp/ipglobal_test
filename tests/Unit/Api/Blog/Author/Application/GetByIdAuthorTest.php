@@ -6,14 +6,14 @@ use App\Api\Blog\Author\Application\DTO\AuthorDTO;
 use App\Api\Blog\Author\Application\GetByIdAuthor;
 use App\Api\Blog\Author\Domain\Author;
 use App\Api\Blog\Author\Domain\AuthorRepository;
-use App\Tests\Unit\Api\Blog\Shared\Factory\AuthorFactory;
+use App\Tests\Factory\AuthorFactory;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 class GetByIdAuthorTest extends TestCase
 {
     #[DataProvider('authorProvider')]
-    public function test_GetByIdAuthor_ReturnsDTO(Author $author): void
+    public function testGetByIdAuthorReturnsDTO(Author $author): void
     {
         $authorRepositoryMock = $this->createMock(AuthorRepository::class);
         $authorRepositoryMock->expects($this->once())
@@ -35,10 +35,8 @@ class GetByIdAuthorTest extends TestCase
      */
     public static function authorProvider(): array
     {
-        return [
-            [
-                AuthorFactory::createRandom()
-            ],
-        ];
+        return array_map(function () {
+            return [AuthorFactory::createRandom()];
+        }, range(1, 5));
     }
 }

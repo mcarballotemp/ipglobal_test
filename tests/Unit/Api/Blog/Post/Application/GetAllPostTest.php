@@ -6,8 +6,7 @@ use App\Api\Blog\Post\Application\GetAllPost;
 use App\Api\Blog\Post\Domain\Post;
 use App\Api\Blog\Post\Domain\PostCollection;
 use App\Api\Blog\Post\Domain\PostRepository;
-use App\Tests\Unit\Api\Blog\Shared\Factory\PostFactory;
-use App\Tests\Utilities\Faker;
+use App\Tests\Factory\PostFactory;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
@@ -17,7 +16,7 @@ class GetAllPostTest extends TestCase
      * @param array<Post> $posts
      */
     #[DataProvider('postProvider')]
-    public function test_GetAllPost_ReturnsArrayDTO($posts): void
+    public function testGetAllPostReturnsArrayDTO($posts): void
     {
         $postCollection = new PostCollection();
         $postCollection->add(...$posts);
@@ -45,9 +44,8 @@ class GetAllPostTest extends TestCase
      */
     public static function postProvider(): array
     {
-        $posts = [];
-        for ($i = 0; $i < 5; $i++) {
-            $posts[] = [
+        return array_map(function () {
+            return [
                 [
                     PostFactory::createRandom(),
                     PostFactory::createRandom(),
@@ -57,7 +55,6 @@ class GetAllPostTest extends TestCase
                     PostFactory::createRandom(),
                 ],
             ];
-        }
-        return $posts;
+        }, range(1, 5));
     }
 }

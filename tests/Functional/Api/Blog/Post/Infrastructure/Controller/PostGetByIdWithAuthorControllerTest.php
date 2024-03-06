@@ -3,6 +3,7 @@
 namespace App\Tests\Functional\Api\Blog\Post\Infrastructure\Controller;
 
 use App\Tests\Functional\BaseFunctional;
+use App\Tests\Utilities\Faker;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -11,7 +12,7 @@ class PostGetByIdWithAuthorControllerTest extends BaseFunctional
     #[DataProvider('postIdProvider')]
     public function testGetPostByIdWithAuthorWithValidDataReturnsPostDetails(int $postId): void
     {
-        $this->client->request('GET', '/api/blog/posts/'.$postId.'/with/author');
+        $this->client->request('GET', '/api/blog/posts/' . $postId . '/with/author');
 
         $content = (string) $this->client->getResponse()->getContent();
 
@@ -31,7 +32,7 @@ class PostGetByIdWithAuthorControllerTest extends BaseFunctional
     #[DataProvider('postWrongsIdProvider')]
     public function testGetPostByIdWithAuthorWithInvalidDataReturnsNotFound(int $postId): void
     {
-        $this->client->request('GET', '/api/blog/posts/'.$postId.'/with/author');
+        $this->client->request('GET', '/api/blog/posts/' . $postId . '/with/author');
 
         $this->assertEquals(Response::HTTP_NOT_FOUND, $this->client->getResponse()->getStatusCode());
     }
@@ -41,7 +42,9 @@ class PostGetByIdWithAuthorControllerTest extends BaseFunctional
      */
     public static function postIdProvider(): array
     {
-        return [[1], [33], [99]];
+        return array_map(function () {
+            return [Faker::get()->numberBetween(1, 99)];
+        }, range(1, 2));
     }
 
     /**
@@ -49,7 +52,9 @@ class PostGetByIdWithAuthorControllerTest extends BaseFunctional
      */
     public static function postWrongsIdProvider(): array
     {
-        return [[300]];
+        return array_map(function () {
+            return [Faker::get()->numberBetween(101, 500)];
+        }, range(1, 2));
     }
 
     /**

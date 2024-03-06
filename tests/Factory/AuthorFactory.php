@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Tests\Unit\Api\Blog\Shared\Factory;
+namespace App\Tests\Factory;
 
 use App\Api\Blog\Author\Domain\Author;
 use App\Tests\Utilities\Faker;

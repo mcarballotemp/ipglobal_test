@@ -8,8 +8,8 @@ use App\Api\Blog\Post\Domain\Post;
 use App\Api\Blog\Post\Domain\PostRepository;
 use App\Api\Blog\Shared\Application\DTO\PostWithAuthorDTO;
 use App\Api\Blog\Shared\Application\GetPostByIdWithAuthor;
-use App\Tests\Unit\Api\Blog\Shared\Factory\AuthorFactory;
-use App\Tests\Unit\Api\Blog\Shared\Factory\PostFactory;
+use App\Tests\Factory\AuthorFactory;
+use App\Tests\Factory\PostFactory;
 use App\Tests\Utilities\Faker;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
@@ -17,7 +17,7 @@ use PHPUnit\Framework\TestCase;
 class GetPostByIdWithAuthorTest extends TestCase
 {
     #[DataProvider('dataProvider')]
-    public function test_GetPostByIdWithAuthor_ReturnsDTO(Post $post, Author $author): void
+    public function testGetPostByIdWithAuthorReturnsDTO(Post $post, Author $author): void
     {
         $postRepositoryMock = $this->createMock(PostRepository::class);
         $postRepositoryMock->expects($this->once())
@@ -53,16 +53,14 @@ class GetPostByIdWithAuthorTest extends TestCase
      */
     public static function dataProvider(): array
     {
-        $data = [];
-        for ($i = 0; $i < 5; $i++) {
+        return array_map(function () {
             $postId = Faker::get()->numberBetween(1, 99);
             $authorId = Faker::get()->numberBetween(1, 99);
 
-            $data[] = [
+            return [
                 PostFactory::createRandomWithIDs($postId, $authorId),
                 AuthorFactory::createRandomWithID($authorId),
             ];
-        }
-        return $data;
+        }, range(1, 5));
     }
 }
