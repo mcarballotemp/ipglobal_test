@@ -6,14 +6,14 @@ use App\Api\Blog\Post\Application\DTO\PostDTO;
 use App\Api\Blog\Post\Application\GetByIdPost;
 use App\Api\Blog\Post\Domain\Post;
 use App\Api\Blog\Post\Domain\PostRepository;
-use App\Tests\Utilities\Faker;
+use App\Tests\Unit\Api\Blog\Shared\Factory\PostFactory;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 class GetByIdPostTest extends TestCase
 {
     #[DataProvider('postProvider')]
-    public function testGetByIdPostReturnsDTO(Post $post): void
+    public function test_GetByIdPost_ReturnsDTO(Post $post): void
     {
         $postRepositoryMock = $this->createMock(PostRepository::class);
         $postRepositoryMock->expects($this->once())
@@ -37,13 +37,10 @@ class GetByIdPostTest extends TestCase
      */
     public static function postProvider(): array
     {
-        return [[
-            Post::fromPrimitives(
-                1,
-                2,
-                Faker::get()->title(),
-                Faker::get()->realText(500)
-            ),
-        ]];
+        $posts = [];
+        for ($i = 0; $i < 5; $i++) {
+            $posts[] = [PostFactory::createRandom()];
+        }
+        return $posts;
     }
 }

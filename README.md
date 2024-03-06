@@ -8,7 +8,8 @@ Comenzamos clonando el repositorio:
 
 Arrancamos Docker:
 
-    docker-compose up -d
+    docker-compose build --no-cache
+    docker-compose up -d --force-recreate
 
 Al terminar, tenemos disponibles las siguientes URLs:
 
@@ -18,9 +19,14 @@ API Swagger/OpenAPI: [http://localhost:8088/api/doc](http://localhost:8088/api/d
 
 #### Si Queremos Desarrollar o Ejecutar los Tests:
 
+Paramos los contenedores por si los teníamos arrancados previamente:
+
+    docker-compose down
+
 Arrancamos Docker con el fichero específico para desarrollo:
 
-    docker-compose -f docker-compose.dev.yml up -d --force-recreate --build
+    docker-compose -f docker-compose.dev.yml build --no-cache
+    docker-compose -f docker-compose.dev.yml up -d --force-recreate
 
 Instalamos las dependencias:
 
@@ -55,7 +61,7 @@ Testing, pudiendo ejecutar por separado unitarios y funcionales:
 
 ## Descripción de la Prueba
 
-Se ha aplicado SOLID y Arquitectura Hexagonal al código en Backend. 
+Se ha aplicado SOLID y Arquitectura Hexagonal al código en Backend.
 
 He utilizado como sustituto de la base de datos la opción de JsonPlaceholder.
 
@@ -81,4 +87,4 @@ Añadido workflow simple para ejecutar phpstan y tests antes de realizar el merg
 - Autenticación con JWT
 - CQRS
 - Cache
-- Paginado y filtros con patron Criteria
+- Paginado y filtros con patrón Criteria

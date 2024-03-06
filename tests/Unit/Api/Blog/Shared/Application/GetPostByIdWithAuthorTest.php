@@ -8,6 +8,8 @@ use App\Api\Blog\Post\Domain\Post;
 use App\Api\Blog\Post\Domain\PostRepository;
 use App\Api\Blog\Shared\Application\DTO\PostWithAuthorDTO;
 use App\Api\Blog\Shared\Application\GetPostByIdWithAuthor;
+use App\Tests\Unit\Api\Blog\Shared\Factory\AuthorFactory;
+use App\Tests\Unit\Api\Blog\Shared\Factory\PostFactory;
 use App\Tests\Utilities\Faker;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
@@ -15,7 +17,7 @@ use PHPUnit\Framework\TestCase;
 class GetPostByIdWithAuthorTest extends TestCase
 {
     #[DataProvider('dataProvider')]
-    public function testGetPostByIdWithAuthorReturnsDTO(Post $post, Author $author): void
+    public function test_GetPostByIdWithAuthor_ReturnsDTO(Post $post, Author $author): void
     {
         $postRepositoryMock = $this->createMock(PostRepository::class);
         $postRepositoryMock->expects($this->once())
@@ -51,29 +53,16 @@ class GetPostByIdWithAuthorTest extends TestCase
      */
     public static function dataProvider(): array
     {
-        return [[
-            Post::fromPrimitives(
-                1,
-                2,
-                Faker::get()->title(),
-                Faker::get()->realText(100)
-            ),
-            Author::fromPrimitives(
-                2,
-                Faker::get()->title(),
-                Faker::get()->email(),
-                Faker::get()->streetAddress(),
-                Faker::get()->streetAddress(),
-                Faker::get()->city(),
-                Faker::get()->postcode(),
-                (string) Faker::get()->latitude(-90, 90),
-                (string) Faker::get()->longitude(-180, 180),
-                Faker::get()->phoneNumber(),
-                Faker::get()->domainName(),
-                Faker::get()->title(),
-                Faker::get()->realText(30),
-                Faker::get()->realText(30)
-            ),
-        ]];
+        $data = [];
+        for ($i = 0; $i < 5; $i++) {
+            $postId = Faker::get()->numberBetween(1, 99);
+            $authorId = Faker::get()->numberBetween(1, 99);
+
+            $data[] = [
+                PostFactory::createRandomWithIDs($postId, $authorId),
+                AuthorFactory::createRandomWithID($authorId),
+            ];
+        }
+        return $data;
     }
 }

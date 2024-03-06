@@ -7,32 +7,22 @@ use App\Api\Blog\Post\Application\DTO\PostDTO;
 use App\Api\Blog\Post\Domain\Post;
 use App\Api\Blog\Post\Domain\PostRepository;
 use App\Api\Blog\Shared\Domain\AuthorCheckIfExists;
+use App\Tests\Unit\Api\Blog\Shared\Factory\PostFactory;
 use App\Tests\Utilities\Faker;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @phpstan-type postData array{authorId:int, title:string, body:string, authorExists:bool}
- */
 class CreatePostTest extends TestCase
 {
-    /**
-     * @param postData $postTestData
-     */
     #[DataProvider('postProvider')]
-    public function testCreatePostReturnsDTO($postTestData): void
+    public function test_CreatePost_ReturnsDTO(Post $post): void
     {
-        $postCreated = Post::fromPrimitives(
-            101,
-            $postTestData['authorId'],
-            $postTestData['title'],
-            $postTestData['body']
-        );
+        $postCreated = $post;
 
         $postToCreate = Post::create(
-            $postTestData['authorId'],
-            $postTestData['title'],
-            $postTestData['body']
+            $post->authorId->value(),
+            $post->title->value(),
+            $post->body->value()
         );
 
         $postRepositoryMock = $this->createMock(PostRepository::class);
@@ -44,15 +34,15 @@ class CreatePostTest extends TestCase
         $AuthorCheckIfExistsMock = $this->createMock(AuthorCheckIfExists::class);
         $AuthorCheckIfExistsMock->expects($this->once())
             ->method('exists')
-            ->with($this->equalTo($postTestData['authorId']))
-            ->willReturn($postTestData['authorExists']);
+            ->with($this->equalTo($post->authorId->value()))
+            ->willReturn(true);
 
         $createPost = new CreatePost($postRepositoryMock, $AuthorCheckIfExistsMock);
 
         $result = $createPost(
-            $postTestData['authorId'],
-            $postTestData['title'],
-            $postTestData['body']
+            $post->authorId->value(),
+            $post->title->value(),
+            $post->body->value()
         );
 
         $this->assertInstanceOf(PostDTO::class, $result);
@@ -62,78 +52,37 @@ class CreatePostTest extends TestCase
         $this->assertEquals($postCreated->body->value(), $result->body);
     }
 
-    /**
-     * @param postData $postTestData
-     */
-    #[DataProvider('postWrongProvider')]
-    public function testCreateWrongPost($postTestData): void
+    public function testCreatePostWithWrongTitle(): void
     {
         $this->expectException(\InvalidArgumentException::class);
+        Post::fromPrimitives(
+            Faker::get()->numberBetween(1, 99),
+            Faker::get()->numberBetween(1, 9),
+            Faker::get()->realText(5000),
+            Faker::get()->realText(500)
+        );
+    }
 
-        $postRepositoryMock = $this->createMock(PostRepository::class);
-
-        $AuthorCheckIfExistsMock = $this->createMock(AuthorCheckIfExists::class);
-        $AuthorCheckIfExistsMock->expects($this->once())
-            ->method('exists')
-            ->with($this->equalTo($postTestData['authorId']))
-            ->willReturn($postTestData['authorExists']);
-
-        $createPost = new CreatePost($postRepositoryMock, $AuthorCheckIfExistsMock);
-
-        $createPost(
-            $postTestData['authorId'],
-            $postTestData['title'],
-            $postTestData['body']
+    public function testCreatePostWithWrongBody(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        Post::fromPrimitives(
+            Faker::get()->numberBetween(1, 99),
+            Faker::get()->numberBetween(1, 9),
+            Faker::get()->title(),
+            Faker::get()->realText(5000)
         );
     }
 
     /**
-     * @return array<array<postData>>
+     * @return array<array<Post>>
      */
     public static function postProvider(): array
     {
-        return [
-            [
-                [
-                    'authorId' => 1,
-                    'title' => Faker::get()->title(),
-                    'body' => Faker::get()->realText(200),
-                    'authorExists' => true,
-                ],
-            ],
-            [
-                [
-                    'authorId' => 6,
-                    'title' => Faker::get()->title(),
-                    'body' => Faker::get()->realText(300),
-                    'authorExists' => true,
-                ],
-            ],
-        ];
-    }
-
-    /**
-     * @return array<array<postData>>
-     */
-    public static function postWrongProvider(): array
-    {
-        return [
-            [
-                [
-                    'authorId' => 100,
-                    'title' => Faker::get()->title(),
-                    'body' => Faker::get()->realText(500),
-                    'authorExists' => false,
-                ],
-            ],
-            [
-                [
-                    'authorId' => 6,
-                    'title' => Faker::get()->realText(1000),
-                    'body' => Faker::get()->realText(200),
-                    'authorExists' => false,
-                ],
-            ],
-        ];
+        $posts = [];
+        for ($i = 0; $i < 5; $i++) {
+            $posts[] = [PostFactory::createRandom()];
+        }
+        return $posts;
     }
 }

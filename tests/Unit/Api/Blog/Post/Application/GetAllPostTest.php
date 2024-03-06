@@ -6,30 +6,21 @@ use App\Api\Blog\Post\Application\GetAllPost;
 use App\Api\Blog\Post\Domain\Post;
 use App\Api\Blog\Post\Domain\PostCollection;
 use App\Api\Blog\Post\Domain\PostRepository;
+use App\Tests\Unit\Api\Blog\Shared\Factory\PostFactory;
 use App\Tests\Utilities\Faker;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @phpstan-type postData array{id:int, authorId:int, title:string, body:string}
- */
 class GetAllPostTest extends TestCase
 {
     /**
-     * @param postData $postTestData
+     * @param array<Post> $posts
      */
     #[DataProvider('postProvider')]
-    public function testGetAllPostReturnsArrayDTO($postTestData): void
+    public function test_GetAllPost_ReturnsArrayDTO($posts): void
     {
-        $post = Post::fromPrimitives(
-            $postTestData['id'],
-            $postTestData['authorId'],
-            $postTestData['title'],
-            $postTestData['body'],
-        );
-
         $postCollection = new PostCollection();
-        $postCollection->add($post);
+        $postCollection->add(...$posts);
 
         $postRepositoryMock = $this->createMock(PostRepository::class);
         $postRepositoryMock->expects($this->once())
@@ -41,36 +32,32 @@ class GetAllPostTest extends TestCase
         $result = $getAllPost();
 
         $this->assertIsArray($result);
-        foreach ($result as $postResult) {
-            $this->assertEquals($post->id->value(), $postResult->id);
-            $this->assertEquals($post->authorId->value(), $postResult->authorId);
-            $this->assertEquals($post->title->value(), $postResult->title);
-            $this->assertEquals($post->body->value(), $postResult->body);
+        foreach ($result as $key => $postResult) {
+            $this->assertEquals($posts[$key]->id->value(), $postResult->id);
+            $this->assertEquals($posts[$key]->authorId->value(), $postResult->authorId);
+            $this->assertEquals($posts[$key]->title->value(), $postResult->title);
+            $this->assertEquals($posts[$key]->body->value(), $postResult->body);
         }
     }
 
     /**
-     * @return array<array<postData>>
+     * @return array<int, array<int, array<int, Post>>>
      */
     public static function postProvider(): array
     {
-        return [
-            [
+        $posts = [];
+        for ($i = 0; $i < 5; $i++) {
+            $posts[] = [
                 [
-                    'id' => 154,
-                    'authorId' => 178,
-                    'title' => Faker::get()->title(),
-                    'body' => Faker::get()->realText(200),
+                    PostFactory::createRandom(),
+                    PostFactory::createRandom(),
                 ],
-            ],
-            [
                 [
-                    'id' => 256,
-                    'authorId' => 600,
-                    'title' => Faker::get()->title(),
-                    'body' => Faker::get()->realText(100),
+                    PostFactory::createRandom(),
+                    PostFactory::createRandom(),
                 ],
-            ],
-        ];
+            ];
+        }
+        return $posts;
     }
 }
